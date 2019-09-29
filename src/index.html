@@ -21,34 +21,45 @@
     <div class="container" style="width: 650px;">
       <div class="row">
         <div class="col-lg-12">
-          <h1 class="text-center">Election Results</h1>
+          <h1 class="text-center">Resume Verification</h1>
           <hr/>
           <br/>
           <div id="loader">
             <p class="text-center">Loading...</p>
           </div>
           <div id="content" style="display: none;">
-            <table class="table">
+            <h3 class="text-center">Add New Point</h1>
+            <form onSubmit="App.addPoint(); return false;">
+              Point : <input type="text" class="form-control" id = "pointstr"><br>
+              Verifier ID: <input type="text" class="form-control" id = "verifID"><br>
+              <button type="submit" class="btn btn-primary">Add Point</button>
+            </form> 
+            <hr/>
+            <h3 class="text-center">Points Status</h1>
+            <table class="table table-hover">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Votes</th>
+                  <th scope="col">Point</th>
+                  <th scope="col">Status</th>
                 </tr>
               </thead>
-              <tbody id="candidatesResults">
+              <tbody id="pointsTable">
               </tbody>
             </table>
             <hr/>
-            <form onSubmit="App.castVote(); return false;">
-              <div class="form-group">
-                <label for="candidatesSelect">Select Candidate</label>
-                <select class="form-control" id="candidatesSelect">
-                </select>
-              </div>
-              <button type="submit" class="btn btn-primary">Vote</button>
-              <hr />
-            </form>
+            <h3 class="text-center">Verify Points</h1>
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Point</th>
+                  <th scope="col">Verify</th>
+                  <th scope="col">Not-Verify</th>
+                </tr>
+              </thead>
+              <tbody id="verifyPointsTable">
+              </tbody>
+            </table>
+            <hr/>
             <p id="accountAddress" class="text-center"></p>
           </div>
         </div>
