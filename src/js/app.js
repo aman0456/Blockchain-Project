@@ -30,7 +30,8 @@ App = {
       App.contracts.Election.setProvider(App.web3Provider);
 
       App.listenForEvents();
-
+      $('#pointsTable').append("<tr> <td> Achieved this </td> <td> not verified </td> </tr>");
+    
       return App.render();
     });
   },
@@ -57,8 +58,8 @@ App = {
     var loader = $("#loader");
     var content = $("#content");
 
-    loader.show();
-    content.hide();
+    loader.hide();
+    content.show();
 
     // Load account data
     web3.eth.getCoinbase(function(err, account) {
@@ -67,45 +68,78 @@ App = {
         $("#accountAddress").html("Your Account: " + account);
       }
     });
+    // App.render();
+    // Load points
+    // App.contracts.Election.deployed().then(function(instance) {
+    //      electionInstance = instance;
+    //      return electionInstance.getPointsCount();   //TODO: Make this function
+    // }).then(function(userPointsCount) {
+    //   var userPoints = $("#userPoints");
+    //   userPoints.empty();
 
-    // Load contract data
-    App.contracts.Election.deployed().then(function(instance) {
-      electionInstance = instance;
-      return electionInstance.candidatesCount();
-    }).then(function(candidatesCount) {
-      var candidatesResults = $("#candidatesResults");
-      candidatesResults.empty();
-
-      var candidatesSelect = $('#candidatesSelect');
-      candidatesSelect.empty();
-
-      for (var i = 1; i <= candidatesCount; i++) {
-        electionInstance.candidates(i).then(function(candidate) {
-          var id = candidate[0];
-          var name = candidate[1];
-          var voteCount = candidate[2];
-
-          // Render candidate Result
-          var candidateTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + voteCount + "</td></tr>"
-          candidatesResults.append(candidateTemplate);
-
-          // Render candidate ballot option
-          var candidateOption = "<option value='" + id + "' >" + name + "</ option>"
-          candidatesSelect.append(candidateOption);
-        });
-      }
-      return electionInstance.voters(App.account);
-    }).then(function(hasVoted) {
-      // Do not allow a user to vote
-      if(hasVoted) {
-        $('form').hide();
-      }
-      loader.hide();
-      content.show();
-    }).catch(function(error) {
-      console.warn(error);
-    });
+    //   for (var i = 1; i <= userPointsCount; i++) {
+    //     electionInstance.getPoint(i).then(function(point) {
+    //       userPoints.append(point);
+    //     })   //TODO: Make this function
+    //   }
+    //   loader.hide();
+    //   content.show();
+    // }).catch(function(error) {
+    //   console.warn(error);
+    // });
   },
+    // Load contract data
+    // App.contracts.Election.deployed().then(function(instance) {
+    //   electionInstance = instance;
+    //   return electionInstance.candidatesCount();
+    // }).then(function(candidatesCount) {
+    //   var candidatesResults = $("#candidatesResults");
+    //   candidatesResults.empty();
+
+    //   var candidatesSelect = $('#candidatesSelect');
+    //   candidatesSelect.empty();
+
+    //   for (var i = 1; i <= candidatesCount; i++) {
+    //     electionInstance.candidates(i).then(function(candidate) {
+    //       var id = candidate[0];
+    //       var name = candidate[1];
+    //       var voteCount = candidate[2];
+
+    //       // Render candidate Result
+    //       var candidateTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + voteCount + "</td></tr>"
+    //       candidatesResults.append(candidateTemplate);
+
+    //       // Render candidate ballot option
+    //       var candidateOption = "<option value='" + id + "' >" + name + "</ option>"
+    //       candidatesSelect.append(candidateOption);
+    //     });
+    //   }
+    //   return electionInstance.voters(App.account);
+    // }).then(function(hasVoted) {
+    //   // Do not allow a user to vote
+    //   if(hasVoted) {
+    //     $('form').hide();
+    //   }
+    //   loader.hide();
+    //   content.show();
+    // }).catch(function(error) {
+    //   console.warn(error);
+    // });
+  // },
+
+  // addPoint: function() {
+  // 	var pointToBeAdded = $('#pointstr').val(); //TODO: change name of field
+  // 	var verifierList = $('#verifID').val() //TODO: change name of field
+  // 	App.contracts.Election.deployed().then(function(instance) {
+  //     return instance.addPoint(pointToBeAdded);
+  //   }).then(function(result) {
+  //     //Wait for point to be added
+  //     $("#content").hide();
+  //     $("#loader").show();
+  //   }).catch(function(err) {
+  //     console.error(err);
+  //   }); //TODO: add event upon addition of point
+  // },
 
   castVote: function() {
     var candidateId = $('#candidatesSelect').val();
