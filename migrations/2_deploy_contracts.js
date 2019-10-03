@@ -1,5 +1,5 @@
-var Election = artifacts.require("./Election.sol");
+var Network = artifacts.require("./Network.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(Election);
+  deployer.deploy(Network);
 };
