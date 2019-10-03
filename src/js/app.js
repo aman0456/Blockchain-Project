@@ -23,14 +23,14 @@ App = {
   },
 
   initContract: function() {
-    $.getJSON("Election.json", function(election) {
+    $.getJSON("Network.json", function(network) {
       // Instantiate a new truffle contract from the artifact
-      App.contracts.Election = TruffleContract(election);
+      App.contracts.Network = TruffleContract(network);
       // Connect provider to interact with contract
-      App.contracts.Election.setProvider(App.web3Provider);
+      App.contracts.Network.setProvider(App.web3Provider);
 
       App.listenForEvents();
-      $('#pointsTable').append("<tr> <td> Achieved this </td> <td> not verified </td> </tr>");
+      // $('#pointssTable').append("<tr> <td> Achieved this </td> <td> not verified </td> </tr>");
     
       return App.render();
     });
@@ -38,11 +38,11 @@ App = {
 
   // Listen for events emitted from the contract
   listenForEvents: function() {
-    App.contracts.Election.deployed().then(function(instance) {
+    App.contracts.Network.deployed().then(function(instance) {
       // Restart Chrome if you are unable to receive this event
       // This is a known issue with Metamask
       // https://github.com/MetaMask/metamask-extension/issues/2393
-      instance.votedEvent({}, {
+      instance. votedEvent({}, {
         fromBlock: 0,
         toBlock: 'latest'
       }).watch(function(error, event) {
@@ -54,7 +54,7 @@ App = {
   },
 
   render: function() {
-    var electionInstance;
+    var networkInstance;
     var loader = $("#loader");
     var content = $("#content");
 
@@ -64,15 +64,19 @@ App = {
     // Load account data
     web3.eth.getCoinbase(function(err, account) {
       if (err === null) {
-        App.account = account;
+        if (account == null) {
+          console.log('getting null account');
+          App.account = 1;
+        }
+        else {
+          App.account = account;
+        }
         $("#accountAddress").html("Your Account: " + account);
       }
     });
-    // App.render();
-    // Load points
-    // App.contracts.Election.deployed().then(function(instance) {
-    //      electionInstance = instance;
-    //      return electionInstance.getPointsCount();   //TODO: Make this function
+    // App.contracts.Network.deployed().then(function(instance) {
+    //      networkInstance = instance;
+    //      return networkInstance.getPointsCount();   //TODO: Make this function
     // }).then(function(userPointsCount) {
     //   var userPoints = $("#userPoints");
     //   userPoints.empty();
@@ -87,64 +91,31 @@ App = {
     // }).catch(function(error) {
     //   console.warn(error);
     // });
-  },
     // Load contract data
-    // App.contracts.Election.deployed().then(function(instance) {
-    //   electionInstance = instance;
-    //   return electionInstance.candidatesCount();
-    // }).then(function(candidatesCount) {
-    //   var candidatesResults = $("#candidatesResults");
-    //   candidatesResults.empty();
+    App.contracts.Network.deployed().then(function(instance) {
+      networkInstance = instance;
+      console.log(networkInstance)
+      // return networkInstance.users(App.account);
+    }).then(function() {
+      var addedPoints = $("#pointsTable");
+      addedPoints.empty();
 
-    //   var candidatesSelect = $('#candidatesSelect');
-    //   candidatesSelect.empty();
+      var toVerifyPoints = $('#verifyPointsTable');
+      toVerifyPoints.empty();
+      console.log(App.account);
+      networkInstance.users(App.account).then(function(user) {
+        console.log(user.points);
+      })
+      // var pointsCount = user.points;
+      // console.log(userPoints);
+      // console.log(pointsCount);
+    });
+  },
 
-    //   for (var i = 1; i <= candidatesCount; i++) {
-    //     electionInstance.candidates(i).then(function(candidate) {
-    //       var id = candidate[0];
-    //       var name = candidate[1];
-    //       var voteCount = candidate[2];
-
-    //       // Render candidate Result
-    //       var candidateTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + voteCount + "</td></tr>"
-    //       candidatesResults.append(candidateTemplate);
-
-    //       // Render candidate ballot option
-    //       var candidateOption = "<option value='" + id + "' >" + name + "</ option>"
-    //       candidatesSelect.append(candidateOption);
-    //     });
-    //   }
-    //   return electionInstance.voters(App.account);
-    // }).then(function(hasVoted) {
-    //   // Do not allow a user to vote
-    //   if(hasVoted) {
-    //     $('form').hide();
-    //   }
-    //   loader.hide();
-    //   content.show();
-    // }).catch(function(error) {
-    //   console.warn(error);
-    // });
-  // },
-
-  // addPoint: function() {
-  // 	var pointToBeAdded = $('#pointstr').val(); //TODO: change name of field
-  // 	var verifierList = $('#verifID').val() //TODO: change name of field
-  // 	App.contracts.Election.deployed().then(function(instance) {
-  //     return instance.addPoint(pointToBeAdded);
-  //   }).then(function(result) {
-  //     //Wait for point to be added
-  //     $("#content").hide();
-  //     $("#loader").show();
-  //   }).catch(function(err) {
-  //     console.error(err);
-  //   }); //TODO: add event upon addition of point
-  // },
-
-  castVote: function() {
-    var candidateId = $('#candidatesSelect').val();
-    App.contracts.Election.deployed().then(function(instance) {
-      return instance.vote(candidateId, { from: App.account });
+  addPoint: function() {
+    var pointToBeAdded = $('#pointstr').val();
+    App.contracts.Network.deployed().then(function(instance) {
+      return instance.addPoint(pointToBeAdded, { from: 1 });
     }).then(function(result) {
       // Wait for votes to update
       $("#content").hide();
@@ -159,4 +130,4 @@ $(function() {
   $(window).load(function() {
     App.init();
   });
-});
+}); 
