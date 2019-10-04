@@ -1,44 +1,126 @@
 pragma solidity 0.5.8;
 
 contract Network {
-    // Model a Candidate
     struct Point{
         string text;
-        address[] verifiers;
+        address[] pendingVerifiers;
+        address[] approvedVerifiers;
+        bool exist;
+    }
+
+    struct PointVerification{
+        address owner;
+        uint pointId;
     }
 
     struct User{
         string name;
-        Point[] points;
+        uint pointId;
         bool exist;
-        // pendingVerifications;
+        uint[] pointsIdList;
+        mapping(uint => Point) points;
+        PointVerification[] pendingVerifications;
     }
 
     mapping(address => User) public users;
-    // event votedEvent (
-    //     uint indexed _candidateId
-    // );
-
+    event votedEvent (
+        uint indexed _candidateId
+    );
+    event debug(string s);
     constructor () public {
         // addCandidate("Candidate 1");
         // addCandidate("Candidate 2");
     }
 
     function addUser(string memory name) public {
+        // User storage user = users[msg.sender];
         users[msg.sender].name = name;
+        users[msg.sender].pointId = 0;
         users[msg.sender].exist = true;
+        // users[msg.sender] = user;
     }
 
     function addPoint(string memory text) public {
         require(users[msg.sender].exist);
         Point memory p;
         p.text = text;
-        users[msg.sender].points.push(p);
+        p.exist = true;
+        users[msg.sender].pointId = users[msg.sender].pointId + 1;
+        users[msg.sender].pointsIdList.push(users[msg.sender].pointId);
+        users[msg.sender].points[users[msg.sender].pointId] = p;
     }
-    function addVerifier(uint pointIndex, address verifierAddress) public {
+
+    function deletePoint(uint pointId) public {
+        require(users[msg.sender].exist);
+        require(users[msg.sender].points[pointId].exist);
+        address[] memory pendingVerifiers = users[msg.sender].points[pointId].pendingVerifiers;
+        for (uint i=0 ; i< pendingVerifiers.length; i++){
+            address verifier = pendingVerifiers[i];
+            uint length = users[verifier].pendingVerifications.length;
+            bool found = false;
+            for(uint j=0; j< length; j++){
+                if (users[verifier].pendingVerifications[j].owner == msg.sender
+                    && users[verifier].pendingVerifications[j].pointId == pointId){
+                    found = true;
+                }
+                if (found && j < length-1){
+                    users[verifier].pendingVerifications[j] = users[verifier].pendingVerifications[j+1];
+                }
+            }
+            delete users[verifier].pendingVerifications[length-1];
+            users[verifier].pendingVerifications.length--;
+        }
+        delete users[msg.sender].points[pointId];
+    }
+
+    function addVerifier(uint pointId, address verifierAddress) public {
         require(users[msg.sender].exist);
         require(users[verifierAddress].exist);
-        users[msg.sender].points[pointIndex].verifiers.push(verifierAddress);
+        require(users[msg.sender].points[pointId].exist);
+        bool found = false;
+        address[] memory pendingVerifiers = users[msg.sender].points[pointId].pendingVerifiers;
+        for(uint i=0; i< pendingVerifiers.length; i++){
+            if(pendingVerifiers[i] == verifierAddress){
+                found = true;
+            }
+        }
+        if (found == false)
+            users[msg.sender].points[pointId].pendingVerifiers.push(verifierAddress);
+        PointVerification memory v;
+        v.owner = msg.sender;
+        v.pointId = pointId;
+        users[verifierAddress].pendingVerifications.push(v);
+    }
+
+    function respondPoint(uint index, bool response) public {
+        require(users[msg.sender].exist);
+        require(index < users[msg.sender].pendingVerifications.length);
+        PointVerification memory p = users[msg.sender].pendingVerifications[index];
+        if (response){
+            users[p.owner].points[p.pointId].approvedVerifiers.push(msg.sender);
+        }
+
+        //delete one element of pendingVerifiers of point owner
+        uint length = users[p.owner].points[p.pointId].pendingVerifiers.length;
+        bool found = false;
+        for (uint i = 0; i<length; i++){
+            if (users[p.owner].points[p.pointId].pendingVerifiers[i] == msg.sender){
+                found = true;
+            }
+            if(found && i<length-1){
+                users[p.owner].points[p.pointId].pendingVerifiers[i] = users[p.owner].points[p.pointId].pendingVerifiers[i+1];
+            }
+        }
+        delete users[p.owner].points[p.pointId].pendingVerifiers[length-1];
+        users[p.owner].points[p.pointId].pendingVerifiers.length--;
+
+        //delete pendingVerifications of msg.sender
+        length = users[msg.sender].pendingVerifications.length;
+        for (uint i = index; i<length-1; i++){
+            users[msg.sender].pendingVerifications[i] = users[msg.sender].pendingVerifications[i+1];
+        }
+        delete users[msg.sender].pendingVerifications[length-1];
+        users[msg.sender].pendingVerifications.length--;      
     }
 
     // function getUser() constant
