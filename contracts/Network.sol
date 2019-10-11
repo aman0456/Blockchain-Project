@@ -59,7 +59,7 @@ contract Network {
 
     //returns pointId, text
     function getPointByIndex(uint index) public
-    returns (uint, string) {
+    returns (uint, string memory) {
         require(users[msg.sender].exist);
         require(index < users[msg.sender].pointsIdList.length);
         uint pointId = users[msg.sender].pointsIdList[index];
@@ -74,11 +74,11 @@ contract Network {
 
     //returns owner address, pointId, text
     function getpendingVerificationByIndex(uint index) public
-    returns (address, uint, string) {
+    returns (address, uint, string memory) {
         require(users[msg.sender].exist);
         require(index < users[msg.sender].pendingVerifications.length);
-        PointVerification pv = users[msg.sender].pendingVerifications[index];
-        Point p = users[pv.owner].points(pv.pointId);
+        PointVerification memory pv = users[msg.sender].pendingVerifications[index];
+        Point memory p = users[pv.owner].points[pv.pointId];
         return (pv.owner, pv.pointId, p.text);
     }
 
