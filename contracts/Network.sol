@@ -1,6 +1,7 @@
 pragma solidity 0.5.8;
 
 contract Network {
+
     struct Point{
         string text;
         address[] pendingVerifiers;
@@ -26,7 +27,7 @@ contract Network {
     event votedEvent (
         uint indexed _candidateId
     );
-    event debug(string s);
+
     constructor () public {
         // addCandidate("Candidate 1");
         // addCandidate("Candidate 2");
@@ -49,6 +50,38 @@ contract Network {
         users[msg.sender].pointsIdList.push(users[msg.sender].pointId);
         users[msg.sender].points[users[msg.sender].pointId] = p;
     }
+
+    function getPointsLength() public 
+    returns (uint) {
+        require(users[msg.sender].exist);
+        return users[msg.sender].pointsIdList.length;
+    }
+
+    //returns pointId, text
+    function getPointByIndex(uint index) public
+    returns (uint, string) {
+        require(users[msg.sender].exist);
+        require(index < users[msg.sender].pointsIdList.length);
+        uint pointId = users[msg.sender].pointsIdList[index];
+        return (pointId, users[msg.sender].points[pointId].text);
+    }
+
+    function getpendingVerificationsLength() public 
+    returns (uint) {
+        require(users[msg.sender].exist);
+        return users[msg.sender].pendingVerifications.length;
+    }
+
+    //returns owner address, pointId, text
+    function getpendingVerificationByIndex(uint index) public
+    returns (address, uint, string) {
+        require(users[msg.sender].exist);
+        require(index < users[msg.sender].pendingVerifications.length);
+        PointVerification pv = users[msg.sender].pendingVerifications[index];
+        Point p = users[pv.owner].points(pv.pointId);
+        return (pv.owner, pv.pointId, p.text);
+    }
+
 
     function deletePoint(uint pointId) public {
         require(users[msg.sender].exist);

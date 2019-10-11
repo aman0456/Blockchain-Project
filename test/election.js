@@ -35,16 +35,19 @@ contract("Network", function(accounts) {
       assert.equal(user1[1], 0, "user1 pointId correct");
       assert.equal(user1[2], true, "user1 exist correct");
       networkInstance.addUser("user2", {from: accounts[1]});
-      // networkInstance.addPoint("point1 user1", {from: accounts[0]});
+      return networkInstance.users(accounts[1]);
+    }).then(function(user2) {
+      assert.equal(user2[0], "user2", "user2 name correct");
+      assert.equal(user2[1], 0, "user2 pointId correct");
+      assert.equal(user2[2], true, "user2 exist correct");
+      networkInstance.addPoint("Point1 user1", {from: accounts[0]});
+      return networkInstance.users(accounts[0]);
+    }).then(function() {
+      assert.equal(user1[0], "user1", "user1 name correct");
+      assert.equal(user1[1], 1, "user1 pointId correct");
+      assert.equal(user1[2], true, "user1 exist correct");
+      networkInstance.addVerifier(0, accounts[1], {from: accounts[0]});
 
-      // assert.equal(receipt.logs.length, 1, "an event was triggered");
-      // assert.equal(receipt.logs[0].event, "votedEvent", "the event type is correct");
-      // assert.equal(receipt.logs[0].args._candidateId.toNumber(), candidateId, "the candidate id is correct");
-      // return networkInstance.voters(accounts[0]);
-    }).then(function() {
-      // assert(voted, "the voter was marked as voted");
-      // return networkInstance.candidates(candidateId);
-    }).then(function() {
       // var voteCount = candidate[2];
       // assert.equal(voteCount, 1, "increments the candidate's vote count");
     })
