@@ -24,9 +24,8 @@ contract Network {
     }
 
     mapping(address => User) public users;
-    event votedEvent (
-        uint indexed _candidateId
-    );
+
+    event Event ();
 
     constructor () public {
         // addCandidate("Candidate 1");
@@ -34,11 +33,11 @@ contract Network {
     }
 
     function addUser(string memory name) public {
-        // User storage user = users[msg.sender];
+        require(!users[msg.sender].exist);
         users[msg.sender].name = name;
         users[msg.sender].pointId = 0;
         users[msg.sender].exist = true;
-        // users[msg.sender] = user;
+        emit Event();
     }
 
     function addPoint(string memory text) public {
@@ -49,16 +48,17 @@ contract Network {
         users[msg.sender].pointId = users[msg.sender].pointId + 1;
         users[msg.sender].pointsIdList.push(users[msg.sender].pointId);
         users[msg.sender].points[users[msg.sender].pointId] = p;
+        emit Event();
     }
 
-    function getPointsLength() public 
+    function getPointsLength() public view
     returns (uint) {
         require(users[msg.sender].exist);
         return users[msg.sender].pointsIdList.length;
     }
 
     //returns pointId, text
-    function getPointByIndex(uint index) public
+    function getPointByIndex(uint index) public view
     returns (uint, string memory) {
         require(users[msg.sender].exist);
         require(index < users[msg.sender].pointsIdList.length);
@@ -66,20 +66,52 @@ contract Network {
         return (pointId, users[msg.sender].points[pointId].text);
     }
 
-    function getpendingVerificationsLength() public 
+    function getPendingVerificationsLength() public view
     returns (uint) {
         require(users[msg.sender].exist);
         return users[msg.sender].pendingVerifications.length;
     }
 
     //returns owner address, pointId, text
-    function getpendingVerificationByIndex(uint index) public
+    function getPendingVerificationByIndex(uint index) public view
     returns (address, uint, string memory) {
         require(users[msg.sender].exist);
         require(index < users[msg.sender].pendingVerifications.length);
         PointVerification memory pv = users[msg.sender].pendingVerifications[index];
         Point memory p = users[pv.owner].points[pv.pointId];
         return (pv.owner, pv.pointId, p.text);
+    }
+
+    function getPendingVerifiersLength(uint pointId) public view
+    returns (uint){
+        require(users[msg.sender].exist);
+        require(users[msg.sender].points[pointId].exist);
+        return users[msg.sender].points[pointId].pendingVerifiers.length;
+    }
+
+    function getApprovedVerifiersLength(uint pointId) public view
+    returns (uint){
+        require(users[msg.sender].exist);
+        require(users[msg.sender].points[pointId].exist);
+        return users[msg.sender].points[pointId].approvedVerifiers.length;
+    }
+
+    function getPendingVerifiersByIndex(uint pointId, uint index) public view
+    returns (address){
+        require(users[msg.sender].exist);
+        require(users[msg.sender].points[pointId].exist);
+        Point memory p = users[msg.sender].points[pointId];
+        require(index < p.pendingVerifiers.length);
+        return p.pendingVerifiers[index];
+    }
+
+    function getApprovedVerifiersByIndex(uint pointId, uint index) public view
+    returns (address){
+        require(users[msg.sender].exist);
+        require(users[msg.sender].points[pointId].exist);
+        Point memory p = users[msg.sender].points[pointId];
+        require(index < p.approvedVerifiers.length);
+        return p.approvedVerifiers[index];
     }
 
 
@@ -104,6 +136,7 @@ contract Network {
             users[verifier].pendingVerifications.length--;
         }
         delete users[msg.sender].points[pointId];
+        emit Event();
     }
 
     function addVerifier(uint pointId, address verifierAddress) public {
@@ -123,6 +156,7 @@ contract Network {
         v.owner = msg.sender;
         v.pointId = pointId;
         users[verifierAddress].pendingVerifications.push(v);
+        emit Event();
     }
 
     function respondPoint(uint index, bool response) public {
@@ -154,6 +188,7 @@ contract Network {
         }
         delete users[msg.sender].pendingVerifications[length-1];
         users[msg.sender].pendingVerifications.length--;      
+        emit Event();
     }
 
     // function getUser() constant
