@@ -1,0 +1,59 @@
+@font-face {
+  font-family: 'icomoon';
+  src: url("../fonts/icomoon/icomoon.eot?srf3rx");
+  src: url("../fonts/icomoon/icomoon.eot?srf3rx#iefix") format("embedded-opentype"), url("../fonts/icomoon/icomoon.ttf?srf3rx") format("truetype"), url("../fonts/icomoon/icomoon.woff?srf3rx") format("woff"), url("../fonts/icomoon/icomoon.svg?srf3rx#icomoon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: "Space Mono", Arial, serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #4d4d4d;
+  background: #fff;
+}
+
+a {
+  color: #FF9000;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+a:hover, a:active, a:focus {
+  color: #FF9000;
+  outline: none;
+  text-decoration: none;
+}
+
+p {
+  margin-bottom: 30px;
+}
+
+h1, h2, h3, h4, h5, h6, figure {
+  color: #000;
+  font-family: "Space Mono", Arial, serif;
+  font-weight: 400;
+  margin: 0 0 20px 0;
+}
+
+::-webkit-selection {
+  color: #fff;
+  background: #FF9000;
+}
+
+::-moz-selection {
+  color: #fff;
+  background: #FF9000;
+}
+
+::selection {
+  color: #fff;
+  background: #FF9000;
+}
+
+#resume {
+	background: #D3D3D3;
+	border-radius: 10px;
+}
