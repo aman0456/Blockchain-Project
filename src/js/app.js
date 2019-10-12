@@ -135,7 +135,7 @@ App = {
 				 return networkInstance.getPointsLength({ from: App.account});   //TODO: Make this function
 		}).then(function(userPointsCount) {
 			console.log("getting")
-			var userPoints = $("#pointsTable");
+			var userPoints = $("#pointsContent");
 			console.log("emptying");
 			$("#pointsTable").empty();
 			userPoints.empty();
@@ -146,7 +146,9 @@ App = {
 			} 
 			for (var i = 0; i < userPointsCount; i++) {
 				networkInstance.getPointByIndex(i, { from: App.account}).then(function(point) {
-					var pointEntry = "<tr> <td>" + point + "</td> <td> </td> </tr>";
+					var pointId = point[0];
+					var pointText = point[1];
+					var pointEntry = "<p id=\"pointPara" + pointId + "\">" + "\t" + pointText + "\t" + "<input type=\"text\" id=\"pointText" + pointId + "\"> </input>" + "<button id=\"pointButton" + pointId + "\" onclick=\"App.addVerifier(\'" + pointId + "\')\"> Add Verifier</button></p>";
 					userPoints.append(pointEntry);
 				});   //TODO: Make this function
 			}
@@ -163,7 +165,7 @@ App = {
 
 			for (var i = 0; i < verifyPointsCount; i++) {
 				networkInstance.getPendingVerificationByIndex(i, { from: App.account}).then(function(point) {
-					var pointEntry = "<tr> <td>" + point + "</td> <td> <button type=\"submit\" class=\"btn btn-primary\" onclick=\"verify(" + i + "," + 1 + ")\">Verify</button></td> <button type=\"submit\" class=\"btn btn-primary\" onclick=\"verify(" + i + "," + 0 + ")\">Reject</button></td> </tr>"
+					var pointEntry = "<tr> <td>" + point + "</td> <td> <button class=\"btn btn-primary\" onclick=\"verify(" + i + "," + 1 + ")\">Verify</button></td> <button type=\"submit\" class=\"btn btn-primary\" onclick=\"verify(" + i + "," + 0 + ")\">Reject</button></td> </tr>"
 					verityPoints.append(point);
 				})   //TODO: Make this function
 			}
@@ -182,6 +184,34 @@ App = {
 		App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
 			return networkInstance.addPoint(pointToBeAdded, { from: App.account});
+		}).then(function(result) {
+			console.log("Added a point to " + App.account)
+			$("#content").hide();
+			$("#loader").show();
+			console.log(result);
+			window.location.reload();
+		}).catch(function(err) {
+			console.error(err);
+		});
+	},
+	//index, bool
+	//respondPoint
+	addVerifier: function(pointId) {
+		console.log("adding a verifier" + pointId);
+		var paraId = "#pointPara" + pointId;
+		var para = $(paraId);
+		console.log(paraId);
+		console.log(para);
+		var textId = "#pointText" + pointId;
+		var text = $(textId).val();
+		console.log(textId);
+		console.log(text);
+		// console.log("adding point")
+		// // console.log("defaultAccount = " + web3.eth.defaultAccount)
+		// var pointToBeAdded = $('#pointstr').val();
+		App.contracts.Network.deployed().then(function(instance) {
+			networkInstance = instance;
+			return networkInstance.addVerifier(pointId, text, { from: App.account});
 		}).then(function(result) {
 			console.log("Added a point to " + App.account)
 			$("#content").hide();

@@ -1,1 +1,10 @@
 make tables sections and add delete button
+login page
+add verifier
+checking of verifying system
+view other's profile
+	:
+
+
+EXTARS:
+integrate with keybase
