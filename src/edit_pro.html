@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Resume verification</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+           <nav class="navbar navbar-light navbar-fixed-top" style="background-color: #e3f2fd;">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="#">WebSiteName</a>
+              </div>
+              <form class="navbar-form navbar-right" action="/action_page.php">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Find People!">
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+              </form>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="index.html">Profile</a></li>
+                <li><a href="verify.html">Verify</a></li>
+                <li><a href="edit_pro.html">Edit Profile</a></li>
+              </ul>
+            </div>
+          </nav>
+      </div>
+    </div>
+    <br/><br/><br/>
+
+    <div class="text-center"><h1> Edit Profile </h1></div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+          <h3 class="text-center">Personal Details</h3>
+
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="phone">Phone:</label>
+              <div class="col-sm-10">
+                <input class="form-control" id="email" placeholder="Enter Contact Number">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="email">Email:</label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control" id="email" placeholder="Enter Email">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="add">Address:</label>
+              <div class="col-sm-10">
+                <input class="form-control" id="pwd" placeholder="Enter Address">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="add">Website:</label>
+              <div class="col-sm-10">
+                <input class="form-control" id="site" placeholder="Enter Website">
+              </div>
+            </div>
+          </form> 
+        </div>
+
+        <div class="col-lg-6">
+          <h3 class="text-center">Description</h3>
+          <form action="/action_page.php">
+            <div class="form-group">
+              <label for="description">Write A Brief Bio:</label>
+              <textarea class="form-control" id="email" rows="6"></textarea> 
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <br/>
+
+    <div class="container" id="resume">
+      
+      <br/>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="panel-group">
+            <div class="panel panel-info" id="acadamics">
+              <div class="panel-heading text-center"><h3><strong>Academics</strong></h3></div>
+              <div class="panel-body">
+                <div id="acadpt1">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <h3 id="acad1"><strong>Acad achive 1</strong></h3>
+                    </div>
+                    <div class="col-lg-6">
+                      <h3 class="text-right">Jan 2019</h3>
+                    </div>
+                  </div>
+                  <p>
+                    point 1<br/>point 2<br/>point 3<br/>
+                  </p>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseverifylist" aria-expanded="false" aria-controls="collapseverifylist">
+                       List of Verifiers
+                      </button>
+                      <div class="collapse" id="collapseverifylist">
+                        <div class="card card-body">
+                          <ul class="list-group">
+                            <li class="list-group-item">point 1   <span class="glyphicon glyphicon-ok"></span><br/></li>
+                            <li class="list-group-item">point 2   <span class="glyphicon glyphicon"></span><br/></li>
+                          </ul>
+                          <form class="form-inline">
+                            <input class="form-control">
+                            <button type="button" class="btn btn-primary">Add</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <button type="button" class="btn btn-danger pull-right">Delete</button>
+                    </div>
+                  </div>
+                </div>
+                <div id="acadpt2">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <h3 id="acad2"><strong>Acad achive 2</strong></h3>
+                    </div>
+                    <div class="col-lg-6">
+                      <h3 class="text-right">Dec 2018</h3>
+                    </div>
+                  </div>
+                  <p>
+                    point 1<br/>point 2<br/>point 3<br/>
+                  </p>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseverifylist2" aria-expanded="false" aria-controls="collapseverifylist2">
+                       List of Verifiers
+                      </button>
+                      <div class="collapse" id="collapseverifylist2">
+                        <div class="card card-body">
+                          vid1<br/>vid2<br/>vid3<br/>vid4<br/>
+                          <form class="form-inline">
+                            <input class="form-control">
+                            <button type="button" class="btn btn-primary">Add</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <button type="button" class="btn btn-danger pull-right">Delete</button>
+                    </div>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-info" id="projects">
+              <div class="panel-heading text-center"><h3><strong>Projects</strong></h3></div>
+              <div class="panel-body">
+                <div id="projpt1">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <h3 id="prog1"><strong>proj1 1</strong></h3>
+                    </div>
+                    <div class="col-lg-6">
+                      <h3 class="text-right">Jan 2019</h3>
+                    </div>
+                  </div>
+                  <p>
+                    point 1<br/>point 2<br/>point 3<br/>
+                  </p>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseverifylist3" aria-expanded="false" aria-controls="collapseverifylist3">
+                       List of Verifiers
+                      </button>
+                      <div class="collapse" id="collapseverifylist3">
+                        <div class="card card-body">
+                          vid1<br/>vid2<br/>vid3<br/>vid4<br/>
+                          <form class="form-inline">
+                            <input class="form-control">
+                            <button type="button" class="btn btn-primary">Add</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <button type="button" class="btn btn-danger pull-right">Delete</button>
+                    </div>
+                  </div>
+                </div>
+                <div id="projpt2">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <h3 id="proj2"><strong>proj2 2</strong></h3>
+                    </div>
+                    <div class="col-lg-6">
+                      <h3 class="text-right">Dec 2018</h3>
+                    </div>
+                  </div>
+                  <p>
+                    point 1<br/>point 2<br/>point 3<br/>
+                  </p>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseverifylist4" aria-expanded="false" aria-controls="collapseverifylist4">
+                       List of Verifiers
+                      </button>
+                      <div class="collapse" id="collapseverifylist4">
+                        <div class="card card-body">
+                          vid1<br/>
+                          vid2   <span class="glyphicon glyphicon"></span><br/>
+                          vid3   <span class="glyphicon glyphicon-ok"></span><br/>
+                          vid4<br/>
+                          <form class="form-inline">
+                            <input class="form-control">
+                            <button type="button" class="btn btn-primary">Add</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <button type="button" class="btn btn-danger pull-right">Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-info" id="extracc">
+              <div class="panel-heading text-center"><h3><strong>Extra curricular activities</strong></h3></div>
+              <div class="panel-body">
+                <div id="eccpt1">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <h3 id="ecc1"><strong>EA 1</strong></h3>
+                    </div>
+                    <div class="col-lg-6">
+                      <h3 class="text-right">Jan 2019</h3>
+                    </div>
+                  </div>
+                  <p>
+                    point 1<br/>point 2<br/>point 3<br/>
+                  </p>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseverifylist5" aria-expanded="false" aria-controls="collapseverifylist5">
+                       List of Verifiers
+                      </button>
+                      <div class="collapse" id="collapseverifylist5">
+                        <div class="card card-body">
+                          vid1<br/>vid2<br/>vid3<br/>vid4<br/>
+                          <form class="form-inline">
+                            <input class="form-control">
+                            <button type="button" class="btn btn-primary">Add</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <button type="button" class="btn btn-danger pull-right">Delete</button>
+                    </div>
+                  </div>
+                </div>
+                <div id="eccpt2">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <h3 id="ecc2"><strong>EA 2</strong></h3>
+                    </div>
+                    <div class="col-lg-6">
+                      <h3 class="text-right">Dec 2018</h3>
+                    </div>
+                  </div>
+                  <p>
+                    point 1<br/>point 2<br/>point 3<br/>
+                  </p>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseverifylist6" aria-expanded="false" aria-controls="collapseverifylist6">
+                       List of Verifiers
+                      </button>
+                      <div class="collapse" id="collapseverifylist6">
+                        <div class="card card-body">
+                          vid1<br/>vid2<br/>vid3<br/>vid4<br/>
+                          <form class="form-inline">
+                            <input class="form-control">
+                            <button type="button" class="btn btn-primary">Add</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <button type="button" class="btn btn-danger pull-right">Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <br/>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <form>
+            <div class="form-group">
+              <label class="control-label col-sm-2">Section</label>
+              <div class="col-sm-10">
+                <input class="form-control" placeholder="Enter Section">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2">Heading</label>
+              <div class="col-sm-10">
+                <input class="form-control" placeholder="Enter Heading">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2">Date</label>
+              <div class="col-sm-10">
+                <input class="form-control" placeholder="Enter Date (eg. Jan 2019)">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="description">Points</label>
+              <textarea class="form-control" id="email" rows="6" placeholder="separate points with <br/>"></textarea> 
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+
+      <br/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
