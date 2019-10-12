@@ -1,1 +1,3 @@
 build/contracts/*.json
+ganache*
+truffle-config.js
