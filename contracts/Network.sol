@@ -28,7 +28,9 @@ contract Network {
     mapping(address => string) public addressId;
     mapping(address => User) public users;
 
-    event addUserEvent();
+    event addUserEvent (
+        address userAddr
+    );
     event addPointEvent();
     event deletePointEvent();
     event addVerifierEvent();
@@ -39,7 +41,7 @@ contract Network {
         // addCandidate("Candidate 2");
     }
 
-    function existUser() public
+    function existUser() public view
     returns (bool){
         return users[msg.sender].exist;
     }
@@ -53,7 +55,7 @@ contract Network {
         users[msg.sender].name = name;
         users[msg.sender].pointId = 0;
         users[msg.sender].exist = true;
-        emit addUserEvent();
+        emit addUserEvent(msg.sender);
     }
 
     function addPoint(string memory text) public {

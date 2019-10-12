@@ -41,6 +41,7 @@ App = {
 					$("#accountAddress").html("Your Account: " + account);
 				}
 			});
+			// window.ethereum.autoRefreshOnNetworkChange = false;
 			// web3.personal.unlockAccount(web3.eth.defaultAccount, "", 0)
 			window.ethereum.enable().then(function(instance) {
 				console.log(instance);
@@ -51,12 +52,17 @@ App = {
 					 return networkInstance.existUser({ from: App.account});
 					 // return networkInstance.addUser("temp1", "temp1", { from: App.account});   //TODO: Make this function
 				}).then(function(doesExist) {
+					console.log(doesExist)
 					if (!doesExist) {
-						networkInstance.addUser("temp1", "temp1", { from: App.account});   //TODO: Make this function
+						return networkInstance.addUser("temp1", "temp1", { from: App.account});   //TODO: Make this function
 					}
-					return App.render();
+					else {
+						return null;
+					}
+				}).then(function(didExist) {
+					App.render();
 				}).catch(function(error) {
-					console.warn(error);
+					console.error(error);
 				});
 				// $('#pointssTable').append("<tr> <td> Achieved this </td> <td> not verified </td> </tr>");
 			});
@@ -75,7 +81,7 @@ App = {
 			}).watch(function(error, event) {
 				console.log("event triggered adduser", error, event)
 				// Reload when a new vote is recorded
-				// App.render();
+				// window.location.reload();
 			});
 			instance.addPointEvent({}, {
 				fromBlock: 0,
@@ -91,7 +97,7 @@ App = {
 			}).watch(function(error, event) {
 				console.log("event triggered delete point", event)
 				// Reload when a new vote is recorded
-				App.render();
+				// App.render();
 			});
 			instance.addVerifierEvent({}, {
 				fromBlock: 0,
@@ -99,7 +105,7 @@ App = {
 			}).watch(function(error, event) {
 				console.log("event triggered add verifier", event)
 				// Reload when a new vote is recorded
-				App.render();
+				// App.render();
 			});
 			instance.respondPointEvent({}, {
 				fromBlock: 0,
@@ -107,7 +113,7 @@ App = {
 			}).watch(function(error, event) {
 				console.log("event triggered respond point 		", event)
 				// Reload when a new vote is recorded
-				App.render();
+				// App.render();
 			});
 		});
 	},
@@ -117,8 +123,8 @@ App = {
 		var networkInstance;
 		var loader = $("#loader");
 		var content = $("#content");
-		loader.hide();
-		content.show();
+		// loader.hide();
+		// content.show();
 
 		// Load account data
 		console.log(web3.eth.accounts[0]);
@@ -128,7 +134,10 @@ App = {
 				 networkInstance = instance;
 				 return networkInstance.getPointsLength({ from: App.account});   //TODO: Make this function
 		}).then(function(userPointsCount) {
+			console.log("getting")
 			var userPoints = $("#pointsTable");
+			console.log("emptying");
+			$("#pointsTable").empty();
 			userPoints.empty();
 			console.log("displaying points");
 			console.log(userPointsCount)
@@ -142,7 +151,7 @@ App = {
 				});   //TODO: Make this function
 			}
 		}).catch(function(error) {
-			console.warn(error);
+			console.error(error);
 		});
 		// get Points to verify
 		App.contracts.Network.deployed().then(function(instance) {
@@ -159,7 +168,7 @@ App = {
 				})   //TODO: Make this function
 			}
 		}).catch(function(error) {
-			console.warn(error);
+			console.error(error);
 		});
 		loader.hide();
 		content.show();
@@ -171,12 +180,14 @@ App = {
 		// console.log("defaultAccount = " + web3.eth.defaultAccount)
 		var pointToBeAdded = $('#pointstr').val();
 		App.contracts.Network.deployed().then(function(instance) {
-			return instance.addPoint(pointToBeAdded, { from: App.account, gas:3000000});
+			networkInstance = instance;
+			return networkInstance.addPoint(pointToBeAdded, { from: App.account});
 		}).then(function(result) {
 			console.log("Added a point to " + App.account)
-			// $("#content").hide();
-			// $("#loader").show();
-			App.render()
+			$("#content").hide();
+			$("#loader").show();
+			console.log(result);
+			window.location.reload();
 		}).catch(function(err) {
 			console.error(err);
 		});
