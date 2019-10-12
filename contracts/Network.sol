@@ -39,6 +39,11 @@ contract Network {
         // addCandidate("Candidate 2");
     }
 
+    function existUser() public
+    returns (bool){
+        return users[msg.sender].exist;
+    }
+
     function addUser(string memory id, string memory name) public {
         require(!users[msg.sender].exist);
         require(!users[idAddress[id]].exist);
