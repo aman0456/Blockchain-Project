@@ -28,7 +28,11 @@ contract Network {
     mapping(address => string) public addressId;
     mapping(address => User) public users;
 
-    event Event ();
+    event addUserEvent();
+    event addPointEvent();
+    event deletePointEvent();
+    event addVerifierEvent();
+    event respondPointEvent();
 
     constructor () public {
         // addCandidate("Candidate 1");
@@ -44,7 +48,7 @@ contract Network {
         users[msg.sender].name = name;
         users[msg.sender].pointId = 0;
         users[msg.sender].exist = true;
-        emit Event();
+        emit addUserEvent();
     }
 
     function addPoint(string memory text) public {
@@ -55,7 +59,7 @@ contract Network {
         users[msg.sender].pointId = users[msg.sender].pointId + 1;
         users[msg.sender].pointsIdList.push(users[msg.sender].pointId);
         users[msg.sender].points[users[msg.sender].pointId] = p;
-        emit Event();
+        emit addPointEvent();
     }
 
     function getPointsLength() public view
@@ -143,7 +147,7 @@ contract Network {
             users[verifier].pendingVerifications.length--;
         }
         delete users[msg.sender].points[pointId];
-        emit Event();
+        emit deletePointEvent();
     }
 
     function addVerifier(uint pointId, string memory verifierId) public {
@@ -164,7 +168,7 @@ contract Network {
         v.owner = msg.sender;
         v.pointId = pointId;
         users[verifierAddress].pendingVerifications.push(v);
-        emit Event();
+        emit addVerifierEvent();
     }
 
     function respondPoint(uint index, bool response) public {
@@ -196,7 +200,7 @@ contract Network {
         }
         delete users[msg.sender].pendingVerifications[length-1];
         users[msg.sender].pendingVerifications.length--;      
-        emit Event();
+        emit respondPointEvent();
     }
 
     // function getUser() constant
