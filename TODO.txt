@@ -8,3 +8,5 @@ view other's profile
 
 EXTARS:
 integrate with keybase
+
+is login required

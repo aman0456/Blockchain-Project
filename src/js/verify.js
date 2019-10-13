@@ -122,35 +122,32 @@ App = {
 		});
 	},
 
-	render: function() {
+	render: async function() {
 		console.log("rendering")
 		var networkInstance;
 		var loader = $("#loader"); //TODO: add loader 
-		var content = $("#content");
-
-		App.contracts.Network.deployed().then(function(instance) {
+		var content = $("#mainContent");
+		content.hide();
+		loader.show();
+		var userPointsCount = await App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
 			return networkInstance.getPendingVerificationsLength({ from: App.account});
-		}).then(async function(userPointsCount) {
-			var verifications = $("#verifications");
-			console.log("emptying");
-			$("#verifications").empty();
-			for (var i = 0; i < userPointsCount; i++) {
-				await networkInstance.getPendingVerificationByIndex(i, { from: App.account}).then(function(point) {
-				var id = point[0];
-				var name = point[1];
-				var pointId = point[2];
-				var heading = point[3];
-				var section = point[4];
-				var text = point[5];
-				var date = point[6];
-				var entry = verificationHTML(id, name, pointId, heading, section, text, date, i);
-				verifications.append(entry);
-		});
-			}
-		}).catch(function(error) {
-			console.error(error);
-		});
+		})
+		var verifications = $("#verifications");
+		console.log("emptying");
+		$("#verifications").empty();
+		for (var i = 0; i < userPointsCount; i++) {
+			var point = await networkInstance.getPendingVerificationByIndex(i, { from: App.account});
+			var id = point[0];
+			var name = point[1];
+			var pointId = point[2];
+			var heading = point[3];
+			var section = point[4];
+			var text = point[5];
+			var date = point[6];
+			var entry = verificationHTML(id, name, pointId, heading, section, text, date, i);
+			verifications.append(entry);
+		}
 		loader.hide();
 		content.show();
 	},
@@ -164,7 +161,7 @@ App = {
 			$("#content").hide();
 			$("#loader").show();
 			console.log(result);
-			window.location.reload();
+			App.render();
 		}).catch(function(err) {
 			console.error(err);
 		});
