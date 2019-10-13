@@ -147,7 +147,7 @@ App = {
 				}
 				sectionToAdd = $('#sectionBody-' + pointSection);
 				sectionToAdd.append(getPointEntryString(point));
-				var verifierElem = $('verifiers-' + pointId);
+				var verifierElem = $('#verifiers-' + pointId);
 				verifierElem.empty();
 				var approvedLength = await networkInstance.getApprovedVerifiersLength(pointId, {from: App.account});
 				for (var j = 0; j < approvedLength; j++) {
@@ -156,40 +156,15 @@ App = {
 					verifierElem.append(getVerifier(curVerifier, 1));
 				}
 				var pendingLength = await networkInstance.getPendingVerifiersLength(pointId, {from: App.account});
-				for (var j = 0; j < approvedLength; j++) {
+				for (var j = 0; j < pendingLength; j++) {
 					console.log("adding pending verifier " + j);
 					var curVerifier = await networkInstance.getPendingVerifiersByIndex(pointId, j, { from: App.account});
 					verifierElem.append(getVerifier(curVerifier, 0));
 				}
 			}
-		}).catch(function(error) {
-			console.error(error);
 		});
-		// get Points to verify
-		await App.contracts.Network.deployed().then(function(instance) {
-				 networkInstance = instance;
-				 return networkInstance.getPendingVerificationsLength();   //TODO: Make this function
-		}).then(function(verifyPointsCount) {
-			var verifyPoints = $("#verifyPointsContent");
-			verifyPoints.empty();
-			console.log("verifying");
-			for (var i = 0; i < verifyPointsCount; i++) {
-				console.log("hello verify");
-			}
-			for (var i = 0; i < verifyPointsCount; i++) {
-				networkInstance.getPendingVerificationByIndex(i, { from: App.account}).then(function(point) {
-					var owner = point[0]
-					var pointId = point[1]
-					var pointText = point[2]
-					var pointEntry = "<p>" + owner + ": " + pointText + "\t <button class=\"btn btn-primary\" onclick=\"verify(" + i + "," + 1 + ")\">Verify</button> <button type=\"submit\" class=\"btn btn-primary\" onclick=\"verify(" + i + "," + 0 + ")\">Reject</button></p>"
-					verifyPoints.append(pointEntry);
-				})   //TODO: Make this function
-			}
-		}).catch(function(error) {
-			console.error(error);
-		});
-		loader.hide();
-		content.show();
+		// loader.hide();
+		// content.show();
 	},
 	//index, bool
 	//respondPoint
@@ -222,9 +197,7 @@ App = {
 		await App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
 			networkInstance.addVerifier(pointId, vVal, { from: App.account});
-		}).catch(function(err) {
-			console.error(err);
-		});
+		})
 		console.log("Added a verifier to " + pointId)
 		// $("#content").hide();
 		// $("#loader").show();
