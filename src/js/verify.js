@@ -150,7 +150,7 @@ App = {
 				var section = point[4];
 				var text = point[5];
 				var date = point[6];
-				var entry = verificationHTML(id, name, pointId, heading, section, text, date, entry);
+				var entry = verificationHTML(id, name, pointId, heading, section, text, date, i);
 				var pointEntry = "<p id=\"pointPara" + pointId + "\">" + "\t" + pointText + "\t" + "<input type=\"text\" id=\"pointText" + pointId + "\"> </input>" + "<button id=\"pointButton" + pointId + "\" onclick=\"App.addVerifier(\'" + pointId + "\')\"> Add Verifier</button></p>";
 				verifications.append(pointEntry);
 		});   //TODO: Make this function
@@ -161,28 +161,10 @@ App = {
 		loader.hide();
 		content.show();
 	},
+
 	//index, bool
 	//respondPoint
-	addPoint: function() {
-		console.log("adding point")
-		// console.log("defaultAccount = " + web3.eth.defaultAccount)
-		var pointToBeAdded = $('#pointstr').val();
-		App.contracts.Network.deployed().then(function(instance) {
-			networkInstance = instance;
-			return networkInstance.addPoint(pointToBeAdded, { from: App.account});
-		}).then(function(result) {
-			console.log("Added a point to " + App.account)
-			$("#content").hide();
-			$("#loader").show();
-			console.log(result);
-			window.location.reload();
-		}).catch(function(err) {
-			console.error(err);
-		});
-	},
-	//index, bool
-	//respondPoint
-	addVerifier: function(pointId) {
+	respondPoint: function(index, response) {
 		console.log("adding a verifier" + pointId);
 		var paraId = "#pointPara" + pointId;
 		var para = $(paraId);
@@ -192,12 +174,9 @@ App = {
 		var text = $(textId).val();
 		console.log(textId);
 		console.log(text);
-		// console.log("adding point")
-		// // console.log("defaultAccount = " + web3.eth.defaultAccount)
-		// var pointToBeAdded = $('#pointstr').val();
 		App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
-			return networkInstance.addVerifier(pointId, text, { from: App.account});
+			return networkInstance.respondPoint(index, response, { from: App.account});
 		}).then(function(result) {
 			console.log("Added a point to " + App.account)
 			$("#content").hide();
@@ -210,8 +189,46 @@ App = {
 	}
 };
 
-function verificationHTML(){
+function verificationHTML(id, name, pointId, heading, section, text, date, index){
 
+	var myvar = 
+	'     <div class="hovhighlight" id="'+ verify- + id + '" >'+
+	'        <div class="container">'+
+	'          <div class="row">'+
+	'            <div class="col-lg-6">'+
+	'            <h3 id="vn1"><strong>' + name + '</strong></h3>'+
+	'            </div>'+
+	'          </div>'+
+	'          <div class="row">'+
+	'            <div class="col-lg-6">'+
+	'              <h4 id="vh2"><strong>' + heading + '</strong></h4>'+
+	'            </div>'+
+	'            <div class="col-lg-6">'+
+	'              <h5 class="text-right">' + date + '</h5>'+
+	'            </div>'+
+	'          </div>  '+
+	'          <div class="row">'+
+	'            <div class="col-lg-12">'+
+	'              <p>'+
+	'                ' + text +
+	'              </p>'+
+	'            </div>'+
+	'          </div>    '+
+	'          <br/>'+
+	'        </div>'+
+	'        <div class="container">'+
+	'          <div class="row">'+
+	'            <div class="col-lg-2">'+
+	'            <button type="button" class="btn btn-success btn-block" onclick="App.respondPoint(' + index + ',' + true + ')">Verify</button>'+
+	'            </div>'+
+	'            <div class="col-lg-2">'+
+	'            <button type="button" class="btn btn-danger btn-block" onclick="App.respondPoint(' + index + ',' + false + ')">Decline</button>'+
+	'            </div>'+
+	'          </div>'+
+	'        </div>'+
+	'        <br/>'+
+	'      </div>';
+	return myvar
 }
 
 $(function() {
