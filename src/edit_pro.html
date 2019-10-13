@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Resume verification</title>
+    <title>Edit Profile</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -34,41 +34,34 @@
           </nav>
       </div>
     </div>
-    <br/><br/><br/>
-
-    <div class="text-center"><h1> Edit Profile </h1></div>
+    <br/><br/><br/><br/>
 
     <div class="container">
       <div class="row">
+        <h3>Personal Details</h3>
         <div class="col-lg-6">
-          <h3 class="text-center">Personal Details</h3>
-          <form class="form-horizontal">
+          <form class="form">
             <div class="form-group">
-              <label class="control-label col-sm-2" for="phone">Name</label>
-              <div class="col-sm-10">
-                <input class="form-control" id="name" placeholder="">
-              </div>
+              <label class="control-label" for="phone">Name</label>
+              <input class="form-control" id="name" placeholder="">
             </div>
             <div class="form-group">
-              <label class="control-label col-sm-2" for="email">Email</label>
-              <div class="col-sm-10">
-                <input type="email" class="form-control" id="email" placeholder="">
-              </div>
+              <label class="control-label" for="email">Email</label>
+              <input type="email" class="form-control" id="email" placeholder="">
             </div>
             <div class="form-group">
-              <label class="control-label col-sm-2" for="add">Profile picture url</label>
-              <div class="col-sm-10">
+              <label class="control-label" for="add">Profile picture url</label>
                 <input class="form-control" id="pic-url" placeholder="">
-              </div>
             </div>
           </form> 
         </div>
         <div class="col-lg-6">
           <!-- <h3 class="text-center">Description</h3> -->
-          <form action="/action_page.php">
+          
+          <form">
             <div class="form-group">
               <label for="description">About</label>
-              <textarea class="form-control" id="bio" rows="6"></textarea> 
+              <textarea class="form-control" id="bio" rows="8"></textarea> 
             </div>
           </form>
         </div>

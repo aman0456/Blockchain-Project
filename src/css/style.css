@@ -45,3 +45,10 @@ h1, h2, h3, h4, h5, h6, figure {
 .hovhighlight:hover{
   background-color: #F5F5F5;
 }
+
+.floatcard {
+    margin-top: 10px;
+    box-shadow: 0 0 10px #D3D3D3;
+    padding:0 15px 0 15px;
+}
+
