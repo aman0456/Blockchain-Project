@@ -19,11 +19,19 @@ App = {
 			return networkInstance.idAddress(userid);
 		});
 		console.log("userid", userid, address);
+		var doesExist = await App.contracts.Network.deployed().then(function(instance) {
+			networkInstance = instance;
+			return networkInstance.existUser({ from: address})
+		});
+		console.log(doesExist);
+		if(!doesExist){
+			window.location.href = 'user_not_found.html';
+		}
 		var result = await App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
 			return networkInstance.users(address);
 		});
-
+		
 		$(document).prop('title', result[1]);
 		$("#id").text("@" + result[0]);
 		$("#name").text(result[1]);
