@@ -135,7 +135,7 @@ App = {
 			console.log("getting")
 			var verifications = $("#verifications");
 			console.log("emptying");
-			verifications.empty();
+			$("#verifications").empty();
 			console.log("displaying verifications");
 			console.log(userPointsCount)
 			// for (var i = 0; i < userPointsCount; i++) {
@@ -162,18 +162,7 @@ App = {
 		content.show();
 	},
 
-	//index, bool
-	//respondPoint
 	respondPoint: function(index, response) {
-		console.log("adding a verifier" + pointId);
-		var paraId = "#pointPara" + pointId;
-		var para = $(paraId);
-		console.log(paraId);
-		console.log(para);
-		var textId = "#pointText" + pointId;
-		var text = $(textId).val();
-		console.log(textId);
-		console.log(text);
 		App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
 			return networkInstance.respondPoint(index, response, { from: App.account});

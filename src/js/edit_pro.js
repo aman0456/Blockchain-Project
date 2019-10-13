@@ -231,6 +231,25 @@ App = {
 		}).catch(function(err) {
 			console.error(err);
 		});
+	},
+
+	editProfile: function() {
+		var paraId = "#pointPara" + pointId;
+		var name = $("name");
+		var email = $("email");
+		var pic = $("pic-url");
+		var bio = $("bio");
+		App.contracts.Network.deployed().then(function(instance) {
+			networkInstance = instance;
+			return networkInstance.respondPoint(name, email, pic, bio, { from: App.account});
+		}).then(function(result) {
+			$("#content").hide();
+			$("#loader").show();
+			console.log(result);
+			window.location.reload();
+		}).catch(function(err) {
+			console.error(err);
+		});
 	}
 };
 
