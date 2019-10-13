@@ -169,6 +169,8 @@ App = {
 					verifierElem.append(getVerifier(curVerifier, 0));
 				}
 			}
+			$('#loader').hide();
+			$('#mainContent').show();
 		});
 	}
 };

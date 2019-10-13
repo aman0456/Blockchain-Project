@@ -124,18 +124,18 @@ App = {
 
 	render: async function() {
 		var loader = $("#loader");
-		var content = $("#content");
-		loader.show();
+		var content = $("#mainContent");
 		content.hide();
+		loader.show();
 
-		var result = await App.contracts.Network.deployed().then(function(instance) {
+		var user = await App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
 			return networkInstance.users(App.account);
 		});
-		$("#name").val(result[1]);
-		$("#email").val(result[2]);
-		$("#image").val(result[3]);
-		$("#bio").text(result[4]);
+		$("#name").val(user[1]);
+		$("#email").val(user[2]);
+		$("#image").val(user[3]);
+		$("#bio").text(user[4]);
 
 		var pointsDiv = $("#pointSections");
 		pointsDiv.empty();
@@ -173,30 +173,24 @@ App = {
 				}
 			}
 		});
-		// loader.hide();
-		// content.show();
+		loader.hide();
+		content.show();
 	},
 	//index, bool
 	//respondPoint
-	addPoint: function() {
+	addPoint: async function() {
 		console.log("adding point")
 		var pointHeading = $('#inputHeading').val();
 		var pointSection = $('#inputSection').val();
 		var pointDate = $('#inputDate').val();
 		var pointText = $('#inputText').val();
 		var pointToBeAdded = $('#pointstr').val();
-		App.contracts.Network.deployed().then(function(instance) {
+		await App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
 			return networkInstance.addPoint(pointHeading, pointSection, pointText, pointDate, { from: App.account});
-		}).then(function(result) {
-			console.log(result);
-			console.log("Added a point to " + App.account)
-			// $("#content").hide();
-			// $("#loader").show();
-			window.location.reload();
-		}).catch(function(err) {
-			console.error(err);
 		});
+		console.log("Added a point to " + App.account)
+		App.render()
 	},
 	//index, bool
 	//respondPoint
@@ -222,13 +216,13 @@ App = {
 			return networkInstance.deletePoint(pointId, { from: App.account});
 		});
 		console.log("Deleted the point " + pointId)
-		window.location.reload();
+		App.render();
 		// $("#content").hide();
 		// $("#loader").show();
 		// window.location.reload();
 	},
 
-	editProfile: function() {
+	editProfile: async function() {
 		var name = $("#name").val();
 		var email = $("#email").val();
 		var pic = $("#pic-url").val();
@@ -237,13 +231,9 @@ App = {
 		App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
 			return networkInstance.editUser(name, email, pic, bio, { from: App.account});
-		}).then(function(result) {
-			// $("#content").hide();
-			// $("#loader").show();
-			window.location.reload();
-		}).catch(function(err) {
-			console.error(err);
 		});
+		console.log("edited profile");
+		App.render();
 	}
 };
 
