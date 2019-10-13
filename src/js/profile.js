@@ -123,10 +123,6 @@ App = {
 	},
 
 	render: async function() {
-		var loader = $("#loader");
-		var content = $("#content");
-		loader.show();
-		content.hide();
 		var pointsDiv = $("#pointSections");
 		pointsDiv.empty();
 		// Load account data
@@ -174,8 +170,6 @@ App = {
 				}
 			}
 		});
-		// loader.hide();
-		// content.show();
 	}
 };
 
