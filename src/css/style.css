@@ -15,12 +15,6 @@ body {
   background: #fff;
 }
 
-a {
-  color: #FF9000;
-  -webkit-transition: 0.5s;
-  -o-transition: 0.5s;
-  transition: 0.5s;
-}
 a:hover, a:active, a:focus {
   color: #FF9000;
   outline: none;
@@ -38,22 +32,16 @@ h1, h2, h3, h4, h5, h6, figure {
   margin: 0 0 20px 0;
 }
 
-::-webkit-selection {
-  color: #fff;
-  background: #FF9000;
-}
-
-::-moz-selection {
-  color: #fff;
-  background: #FF9000;
-}
-
-::selection {
-  color: #fff;
-  background: #FF9000;
-}
-
 #resume {
 	background: #D3D3D3;
 	border-radius: 10px;
+}
+
+#inres {
+	background: #FFF;
+	border-radius: 10px;
+}
+
+.hovhighlight:hover{
+  background-color: #F5F5F5;
 }
