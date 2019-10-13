@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Profile</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+           <nav class="navbar navbar-light navbar-fixed-top" style="background-color: #e3f2fd;">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="#">WebSiteName</a>
+              </div>
+              <form class="navbar-form navbar-right" action="user.html">
+                <div class="form-group">
+                  <input type="text" name="user" class="form-control" placeholder="Find People!">
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+              </form>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="index.html">Profile</a></li>
+                <li><a href="verify.html">Verify</a></li>
+                <li><a href="edit_pro.html">Edit Profile</a></li>
+              </ul>
+            </div>
+          </nav>
+      </div>
+    </div>
+    <br/><br/><br/><br/>
+    
+    <div class="container">
+
+      <div class="row">
+        <div class="col-lg-12">
+          <img src="" id="image" class="img-responsive center-block" alt="profile pic" style="width:150px;height:150px">
+          <p>
+            <h3 class="text-center" id="name">Name</h3>
+            <h5 class="text-center" style="color:#a9a9a9;" id="id">@userid</h5>
+            <h5 class="text-center" style="color:#a9a9a9;" id="email">email</h5></p>
+        </div>
+      </div>
+      <div class="floatcard">
+        <div class="row">
+          <div class="col-lg-12">
+            <h2>About</h2>
+            <p id="bio"></p>
+          </div>
+          <!-- <div class="col-lg-2"></div>   -->
+        </div>
+      </div>
+    </div>
+    <br/>
+
+    <div class="container" id="resume">
+      
+      <br/>
+      <div class="row">
+        <div class="col-lg-12" id="pointSections">
+          <div class="panel-group">
+            <div class="panel panel-info" id="acadamics">
+              <div class="panel-heading text-center"><h2><strong>Academics</strong></h2></div>
+              <div class="panel-body">
+                <div id="acadpt1">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <h3 id="acad1"><strong>Acad achive 1</strong></h3>
+                    </div>
+                    <div class="col-lg-6">
+                      <h4 class="text-right">Jan 2019</h4>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <p>
+                        point 1<br/>point 2<br/>point 3<br/>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseverifylist" aria-expanded="false" aria-controls="collapseverifylist">
+                       List of Verifiers
+                      </button>
+                      <div class="collapse" id="collapseverifylist">
+                        <div class="card card-body">
+                          <ul class="list-group">
+                            <li class="list-group-item" style="border: none;">point 1   <span class="glyphicon glyphicon-ok"></span><br/></li>
+                            <li class="list-group-item" style="border: none;">point 2   <span class="glyphicon glyphicon"></span><br/></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-info" id="projects">
+              <div class="panel-heading text-center"><h2><strong>Projects</strong></h2></div>
+              <div class="panel-body">
+                <div id="projpt1">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <h3 id="prog1"><strong>proj1 1</strong></h3>
+                    </div>
+                    <div class="col-lg-6">
+                      <h4 class="text-right">Jan 2019</h4>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <p>
+                        point 1<br/>point 2<br/>point 3<br/>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseverifylist3" aria-expanded="false" aria-controls="collapseverifylist3">
+                       List of Verifiers
+                      </button>
+                      <div class="collapse" id="collapseverifylist3">
+                        <div class="card card-body">
+                          <ul class="list-group">
+                            <li class="list-group-item" style="border: none;">point 1   <span class="glyphicon glyphicon-ok"></span><br/></li>
+                            <li class="list-group-item" style="border: none;">point 2   <span class="glyphicon glyphicon"></span><br/></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-info" id="extracc">
+              <div class="panel-heading text-center"><h2><strong>Extra curricular activities</strong></h2></div>
+              <div class="panel-body">
+                <div id="eccpt1">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <h3 id="ecc1"><strong>EA 1</strong></h3>
+                    </div>
+                    <div class="col-lg-6">
+                      <h4 class="text-right">Jan 2019</h4>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <p>
+                        point 1<br/>point 2<br/>point 3<br/>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseverifylist5" aria-expanded="false" aria-controls="collapseverifylist5">
+                       List of Verifiers
+                      </button>
+                      <div class="collapse" id="collapseverifylist5">
+                        <div class="card card-body">
+                          <ul class="list-group">
+                            <li class="list-group-item" style="border: none;">point 1   <span class="glyphicon glyphicon-ok"></span><br/></li>
+                            <li class="list-group-item" style="border: none;">point 2   <span class="glyphicon glyphicon"></span><br/></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+    <script src="js/user.js"></script>
+    <script src="js/profile_helper.js"></script>
+  </body>
+
+
+</html>

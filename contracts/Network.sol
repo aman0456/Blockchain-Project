@@ -21,7 +21,7 @@ contract Network {
         string id;
         string name;
         string email;
-        string temp;
+        string image;
         string bio;
         uint pointId;
         bool exist;
@@ -51,7 +51,7 @@ contract Network {
         return users[msg.sender].exist;
     }
 
-    function addUser(string memory id, string memory name, string memory email, string memory temp) public {
+    function addUser(string memory id, string memory name, string memory email, string memory image) public {
         require(!users[msg.sender].exist);
         require(!users[idAddress[id]].exist);
         users[msg.sender].id = id;
@@ -59,18 +59,18 @@ contract Network {
         addressId[msg.sender] = id;
         users[msg.sender].name = name;
         users[msg.sender].email = email;
-        users[msg.sender].temp = temp;
+        users[msg.sender].image = image;
         users[msg.sender].bio = "";
         users[msg.sender].pointId = 0;
         users[msg.sender].exist = true;
         emit addUserEvent();
     }
 
-    function editUser(string memory name, string memory email, string memory temp, string memory bio) public {
+    function editUser(string memory name, string memory email, string memory image, string memory bio) public {
         require(users[msg.sender].exist);
         users[msg.sender].name = name;
         users[msg.sender].email = email;
-        users[msg.sender].temp = temp;
+        users[msg.sender].image = image;
         users[msg.sender].bio = bio;
         emit editUserEvent();
     }
