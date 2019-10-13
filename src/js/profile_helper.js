@@ -10,7 +10,7 @@ function getVerifier(username, status) {
 	if (status) {
 		statusSymbol = "glyphicon-ok"
 	}
-	return "<li class=\"list-group-item\" style=\"border: none;\">" + username + "   <span class=\"glyphicon " + statusSymbol + "\"></span><br/></li>";
+	return "<li class=\"list-group-item\" style=\"border: none;\"> <a href=\"/user.html?user=" + username + "\">" + username + "</a>   <span class=\"glyphicon " + statusSymbol + "\"></span><br/></li>";
 }
 
 function getPointEntryString(point) {
