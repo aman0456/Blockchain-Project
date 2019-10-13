@@ -174,6 +174,18 @@ contract Network {
             delete users[verifier].pendingVerifications[length-1];
             users[verifier].pendingVerifications.length--;
         }
+        uint length = users[msg.sender].pointsIdList.length;
+        bool found = false;
+        for(uint i=0; i< length; i++){
+            if (users[msg.sender].pointsIdList[i] == pointId){
+                found = true;
+            }
+            if (found && i < length-1){
+                users[msg.sender].pointsIdList[i] = users[msg.sender].pointsIdList[i+1];
+            }
+        }
+        delete users[msg.sender].pointsIdList[length-1];
+        users[msg.sender].pointsIdList.length--;
         delete users[msg.sender].points[pointId];
         emit deletePointEvent();
     }
