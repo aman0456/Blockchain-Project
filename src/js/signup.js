@@ -46,6 +46,7 @@ App = {
 	validateForm: function(){
 	  var id = document.getElementById("id").value;
 	  var name = document.getElementById("name").value;
+	  var email = document.getElementById("email").value;
 	  // if(id.length == 0){
 	  //   document.getElementById("error").style.color = "red";
 	  //   document.getElementById("error").innerHTML = "ID is required";
@@ -56,10 +57,9 @@ App = {
 	  //   document.getElementById("error").innerHTML = "Password is required";
 	  //   return;
 	  // }
-	  console.log("adding user");
 	  App.contracts.Network.deployed().then(function(instance) {
 	  	networkInstance = instance;
-	  	return networkInstance.addUser(id, name, "", "", { from: App.account});
+	  	return networkInstance.addUser(id, name, email, "", { from: App.account});
 	  }).then(function(result) {
 	  	console.log(result);
 	  	window.location.replace("index.html");

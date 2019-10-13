@@ -8,6 +8,10 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="js/web3.min.js"></script>
+<script src="js/truffle-contract.js"></script>
+<script src="js/signup.js"></script>
 <style type="text/css">
   .login-form {
     width: 340px;
@@ -39,16 +43,16 @@
         <br/>
         <h2 class="text-center">Sign Up</h2>       
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Username" required="required">
+            <input type="text" id="name" class="form-control" placeholder="Username" required="required">
         </div>
         <div class="form-group">
-            <input type="password" class="form-control" placeholder="User ID" required="required">
+            <input type="text" id="id" class="form-control" placeholder="User ID" required="required">
         </div>
         <div class="form-group">
-            <input type="password" class="form-control" placeholder="Email" required="required">
+            <input type="email" id="email" class="form-control" placeholder="Email" required="required">
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+            <button type="button" onclick="App.validateForm()" class="btn btn-primary btn-block">Sign Up</button>
         </div>    
     </form>
 </div>
