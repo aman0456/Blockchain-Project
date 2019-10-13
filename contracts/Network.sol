@@ -3,6 +3,9 @@ pragma solidity 0.5.8;
 contract Network {
 
     struct Point{
+        string heading;
+        string section;
+        string date;
         string text;
         address[] pendingVerifiers;
         address[] approvedVerifiers;
@@ -17,6 +20,9 @@ contract Network {
     struct User{
         string id;
         string name;
+        string email;
+        string temp;
+        string bio;
         uint pointId;
         bool exist;
         uint[] pointsIdList;
@@ -28,9 +34,8 @@ contract Network {
     mapping(address => string) public addressId;
     mapping(address => User) public users;
 
-    event addUserEvent (
-        address userAddr
-    );
+    event addUserEvent ();
+    event editUserEvent ();
     event addPointEvent();
     event deletePointEvent();
     event addVerifierEvent();
@@ -46,22 +51,37 @@ contract Network {
         return users[msg.sender].exist;
     }
 
-    function addUser(string memory id, string memory name) public {
+    function addUser(string memory id, string memory name, string memory email, string memory temp) public {
         require(!users[msg.sender].exist);
         require(!users[idAddress[id]].exist);
         users[msg.sender].id = id;
         idAddress[id] = msg.sender;
         addressId[msg.sender] = id;
         users[msg.sender].name = name;
+        users[msg.sender].email = email;
+        users[msg.sender].temp = temp;
+        users[msg.sender].bio = "";
         users[msg.sender].pointId = 0;
         users[msg.sender].exist = true;
-        emit addUserEvent(msg.sender);
+        emit addUserEvent();
     }
 
-    function addPoint(string memory text) public {
+    function editUser(string memory name, string memory email, string memory temp, string memory bio) public {
+        require(users[msg.sender].exist);
+        users[msg.sender].name = name;
+        users[msg.sender].email = email;
+        users[msg.sender].temp = temp;
+        users[msg.sender].bio = bio;
+        emit editUserEvent();
+    }
+
+    function addPoint(string memory heading, string memory section, string memory text, string memory date) public {
         require(users[msg.sender].exist);
         Point memory p;
+        p.heading = heading;
+        p.section = section;
         p.text = text;
+        p.date = date;
         p.exist = true;
         users[msg.sender].pointId = users[msg.sender].pointId + 1;
         users[msg.sender].pointsIdList.push(users[msg.sender].pointId);
@@ -75,13 +95,14 @@ contract Network {
         return users[msg.sender].pointsIdList.length;
     }
 
-    //returns pointId, text
+    //returns pointId, heading, section, text, date 
     function getPointByIndex(uint index) public view
-    returns (uint, string memory) {
+    returns (uint, string memory, string memory, string memory, string memory) {
         require(users[msg.sender].exist);
         require(index < users[msg.sender].pointsIdList.length);
         uint pointId = users[msg.sender].pointsIdList[index];
-        return (pointId, users[msg.sender].points[pointId].text);
+        Point memory p = users[msg.sender].points[pointId];
+        return (pointId, p.heading, p.section, p.text, p.date);
     }
 
     function getPendingVerificationsLength() public view
@@ -90,14 +111,14 @@ contract Network {
         return users[msg.sender].pendingVerifications.length;
     }
 
-    //returns owner id, pointId, text
+    //returns owner id, name, pointId, heading, section, text, date
     function getPendingVerificationByIndex(uint index) public view
-    returns (string memory, uint, string memory) {
+    returns (string memory, string memory, uint, string memory, string memory, string memory, string memory) {
         require(users[msg.sender].exist);
         require(index < users[msg.sender].pendingVerifications.length);
         PointVerification memory pv = users[msg.sender].pendingVerifications[index];
         Point memory p = users[pv.owner].points[pv.pointId];
-        return (addressId[pv.owner], pv.pointId, p.text);
+        return (addressId[pv.owner], users[pv.owner].name, pv.pointId, p.heading, p.section, p.text, p.date);
     }
 
     function getPendingVerifiersLength(uint pointId) public view
@@ -209,40 +230,4 @@ contract Network {
         users[msg.sender].pendingVerifications.length--;      
         emit respondPointEvent();
     }
-
-    // function getUser() constant
-    // returns (User){
-    //     return users[msg.sender];
-    // }
-    // function getPoint(uint index)  constant
-    // returns (Point){
-    //     return users[msg.sender].points[index];
-    // }
-    // function getVerifier(uint index1, uint index2)
-    // constant
-    // returns (address){
-    //     return users[msg.sender].points[index1].verifiers[index2];
-    // }
-
-    // function addCandidate (string memory _name) public {
-    //     candidatesCount ++;
-    //     candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
-    // }
-
-    // function vote (uint _candidateId) public {
-    //     // require that they haven't voted before
-    //     require(!voters[msg.sender]);
-
-    //     // require a valid candidate
-    //     require(_candidateId > 0 && _candidateId <= candidatesCount);
-
-    //     // record that voter has voted
-    //     voters[msg.sender] = true;
-
-    //     // update candidate vote Count
-    //     candidates[_candidateId].voteCount ++;
-
-    //     // trigger voted event
-    //     emit votedEvent(_candidateId);
-    // }
 }

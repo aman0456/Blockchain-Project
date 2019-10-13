@@ -59,7 +59,7 @@ App = {
 	  console.log("adding user");
 	  App.contracts.Network.deployed().then(function(instance) {
 	  	networkInstance = instance;
-	  	return networkInstance.addUser(id, name, { from: App.account});
+	  	return networkInstance.addUser(id, name, "", "", { from: App.account});
 	  }).then(function(result) {
 	  	console.log(result);
 	  	window.location.replace("index.html");
