@@ -130,19 +130,13 @@ App = {
 
 		App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
-			return networkInstance.getPendingVerificationsLength({ from: App.account});   //TODO: Make this function
-		}).then(function(userPointsCount) {
-			console.log("getting")
+			return networkInstance.getPendingVerificationsLength({ from: App.account});
+		}).then(async function(userPointsCount) {
 			var verifications = $("#verifications");
 			console.log("emptying");
 			$("#verifications").empty();
-			console.log("displaying verifications");
-			console.log(userPointsCount)
-			// for (var i = 0; i < userPointsCount; i++) {
-			// 	console.log("hello");
-			// } 
 			for (var i = 0; i < userPointsCount; i++) {
-				networkInstance.getPendingVerificationByIndex(i, { from: App.account}).then(function(point) {
+				await networkInstance.getPendingVerificationByIndex(i, { from: App.account}).then(function(point) {
 				var id = point[0];
 				var name = point[1];
 				var pointId = point[2];
@@ -151,9 +145,8 @@ App = {
 				var text = point[5];
 				var date = point[6];
 				var entry = verificationHTML(id, name, pointId, heading, section, text, date, i);
-				var pointEntry = "<p id=\"pointPara" + pointId + "\">" + "\t" + pointText + "\t" + "<input type=\"text\" id=\"pointText" + pointId + "\"> </input>" + "<button id=\"pointButton" + pointId + "\" onclick=\"App.addVerifier(\'" + pointId + "\')\"> Add Verifier</button></p>";
-				verifications.append(pointEntry);
-		});   //TODO: Make this function
+				verifications.append(entry);
+		});
 			}
 		}).catch(function(error) {
 			console.error(error);
@@ -181,7 +174,7 @@ App = {
 function verificationHTML(id, name, pointId, heading, section, text, date, index){
 
 	var myvar = 
-	'     <div class="hovhighlight" id="'+ verify- + id + '" >'+
+	'     <div class="hovhighlight" id="verify-' + index + '" >'+
 	'        <div class="container">'+
 	'          <div class="row">'+
 	'            <div class="col-lg-6">'+

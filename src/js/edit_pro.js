@@ -122,7 +122,7 @@ App = {
 		});
 	},
 
-	render: function() {
+	render: async function() {
 		var loader = $("#loader");
 		var content = $("#content");
 		loader.show();
@@ -130,59 +130,41 @@ App = {
 		var pointsDiv = $("#pointSections");
 		pointsDiv.empty();
 		// Load account data
-		App.contracts.Network.deployed().then(function(instance) {
+		await App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
 			return networkInstance.getPointsLength({ from: App.account});
-		}).then(function(userPointsCount) {
+		}).then(async function(userPointsCount) {
 			console.log("displaying points");
 			for (var i = 0; i < userPointsCount; i++) {
 				console.log("adding point " + i);
-				networkInstance.getPointByIndex(i, { from: App.account}).then(function(point) {
-					pointId = point[0];
-					var pointSection = point[2];
-					var sectionToAdd = $("#section-" + pointSection);
-					if (!sectionToAdd.length) {
-						console.log("adding section" + pointSection);
-						pointsDiv.append(addSectionString(pointSection));
-					}
-					sectionToAdd = $('#sectionBody-' + pointSection);
-					console.log(sectionToAdd.length)
-					sectionToAdd.append(getPointEntryString(point));
-					console.log(sectionToAdd.length)
-					return networkInstance.getApprovedVerifiersLength(pointId, {from: App.account});
-				}).then(function(approvedVerifiersLength) {
-					console.log(approvedVerifiersLength);
-					console.log(pointId);
-				});
+				var point = await networkInstance.getPointByIndex(i, { from: App.account});
+				var pointId = point[0];
+				var pointSection = point[2];
+				var sectionToAdd = $("#section-" + pointSection);
+				if (!sectionToAdd.length) {
+					console.log("adding section" + pointSection);
+					pointsDiv.append(addSectionString(pointSection));
+				}
+				sectionToAdd = $('#sectionBody-' + pointSection);
+				sectionToAdd.append(getPointEntryString(point));
+				var verifierElem = $('#verifiers-' + pointId);
+				verifierElem.empty();
+				var approvedLength = await networkInstance.getApprovedVerifiersLength(pointId, {from: App.account});
+				for (var j = 0; j < approvedLength; j++) {
+					console.log("adding approved verifier " + j);
+					var curVerifier = await networkInstance.getApprovedVerifiersByIndex(pointId, j, { from: App.account});
+					verifierElem.append(getVerifier(curVerifier, 1));
+				}
+				var pendingLength = await networkInstance.getPendingVerifiersLength(pointId, {from: App.account});
+				for (var j = 0; j < pendingLength; j++) {
+					console.log("adding pending verifier " + j);
+					var curVerifier = await networkInstance.getPendingVerifiersByIndex(pointId, j, { from: App.account});
+					verifierElem.append(getVerifier(curVerifier, 0));
+				}
 			}
-		}).catch(function(error) {
-			console.error(error);
 		});
-		// get Points to verify
-		App.contracts.Network.deployed().then(function(instance) {
-				 networkInstance = instance;
-				 return networkInstance.getPendingVerificationsLength();   //TODO: Make this function
-		}).then(function(verifyPointsCount) {
-			var verifyPoints = $("#verifyPointsContent");
-			verifyPoints.empty();
-			console.log("verifying");
-			for (var i = 0; i < verifyPointsCount; i++) {
-				console.log("hello verify");
-			}
-			for (var i = 0; i < verifyPointsCount; i++) {
-				networkInstance.getPendingVerificationByIndex(i, { from: App.account}).then(function(point) {
-					var owner = point[0]
-					var pointId = point[1]
-					var pointText = point[2]
-					var pointEntry = "<p>" + owner + ": " + pointText + "\t <button class=\"btn btn-primary\" onclick=\"verify(" + i + "," + 1 + ")\">Verify</button> <button type=\"submit\" class=\"btn btn-primary\" onclick=\"verify(" + i + "," + 0 + ")\">Reject</button></p>"
-					verifyPoints.append(pointEntry);
-				})   //TODO: Make this function
-			}
-		}).catch(function(error) {
-			console.error(error);
-		});
-		loader.hide();
-		content.show();
+		// loader.hide();
+		// content.show();
 	},
 	//index, bool
 	//respondPoint
@@ -208,46 +190,46 @@ App = {
 	},
 	//index, bool
 	//respondPoint
-	addVerifier: function(pointId) {
+	addVerifier: async function(pointId) {
 		console.log("adding a verifier" + pointId);
-		var paraId = "#pointPara" + pointId;
-		var para = $(paraId);
-		console.log(paraId);
-		console.log(para);
-		var textId = "#pointText" + pointId;
-		var text = $(textId).val();
-		console.log(textId);
-		console.log(text);
-		// console.log("adding point")
-		// // console.log("defaultAccount = " + web3.eth.defaultAccount)
-		// var pointToBeAdded = $('#pointstr').val();
-		App.contracts.Network.deployed().then(function(instance) {
+		var vId = "#verifierToAdd-" + pointId;
+		var vVal = $(vId).val();
+		await App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
-			return networkInstance.addVerifier(pointId, text, { from: App.account});
-		}).then(function(result) {
-			console.log("Added a point to " + App.account)
-			$("#content").hide();
-			$("#loader").show();
-			console.log(result);
-			window.location.reload();
-		}).catch(function(err) {
-			console.error(err);
-		});
+			networkInstance.addVerifier(pointId, vVal, { from: App.account});
+		})
+		console.log("Added a verifier to " + pointId);
+		window.location.reload();
+		// $("#content").hide();
+		// $("#loader").show();
+		// window.location.reload();
+	},
+
+	deletePoint: async function(pointId) {
+		console.log("deleting the point" + pointId);
+		await App.contracts.Network.deployed().then(function(instance) {
+			networkInstance = instance;
+			networkInstance.deletePoint(pointId, { from: App.account});
+		})
+		console.log("Deleted the point " + pointId)
+		window.location.reload();
+		// $("#content").hide();
+		// $("#loader").show();
+		// window.location.reload();
 	},
 
 	editProfile: function() {
 		var paraId = "#pointPara" + pointId;
-		var name = $("name");
-		var email = $("email");
-		var pic = $("pic-url");
-		var bio = $("bio");
+		var name = $("name").val();
+		var email = $("email").val();
+		var pic = $("pic-url").val();
+		var bio = $("bio").val();
 		App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
 			return networkInstance.respondPoint(name, email, pic, bio, { from: App.account});
 		}).then(function(result) {
-			$("#content").hide();
-			$("#loader").show();
-			console.log(result);
+			// $("#content").hide();
+			// $("#loader").show();
 			window.location.reload();
 		}).catch(function(err) {
 			console.error(err);

@@ -5,10 +5,12 @@ function addSectionString(sectionName) {
 				+ "<div class=\"panel-body\" id=\"sectionBody-" + sectionName + "\"></div></div>";
 }
 
-function updatePoints() {
-  var acadPointsDiv = $('#academicsBody');
-  acadPointsDiv.empty();
-
+function getVerifier(username, status) {
+	statusSymbol = "glyphicon";
+	if (status) {
+		statusSymbol = "glyphicon-ok"
+	}
+	return "<li class=\"list-group-item\" style=\"border: none;\">" + username + "   <span class=\"glyphicon " + statusSymbol + "\"></span><br/></li>";
 }
 
 function getPointEntryString(point) {
@@ -30,20 +32,21 @@ function getPointEntryString(point) {
 		"                  </p>\n" + 
 		"                  <div class=\"row\">\n" + 
 		"                    <div class=\"col-lg-6\">\n" + 
-		"                      <button class=\"btn btn-primary\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapseverifylist:" + pointId + "\" aria-expanded=\"false\" aria-controls=\"collapseverifylist\">\n" + 
+		"                      <button class=\"btn btn-primary\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapseverifylist-" + pointId + "\" aria-expanded=\"false\" aria-controls=\"collapseverifylist\">\n" + 
 		"                       List of Verifiers\n" + 
 		"                      </button>\n" + 
-		"                      <div class=\"collapse\" id=\"collapseverifylist:" + pointId + "\">\n" + 
-		"                        <div class=\"card card-body\" id=\"verifiers:" + pointId + "\">\n" + 
+		"                      <div class=\"collapse\" id=\"collapseverifylist-" + pointId + "\">\n" + 
+		"                        <div class=\"card card-body\">\n" +
+		"							<ul class=\"list-group\" id=\"verifiers-" + pointId + "\"></ul>" +
 		"                          <form class=\"form-inline\">\n" + 
-		"                            <input class=\"form-control\">\n" + 
-		"                            <button type=\"button\" class=\"btn btn-primary\">Add</button>\n" + 
+		"                            <input class=\"form-control\" id=\"verifierToAdd-" + pointId + "\">\n" + 
+		"                            <button type=\"button\" class=\"btn btn-primary\" onclick=\"App.addVerifier(" + pointId + ")\">Add</button>\n" + 
 		"                          </form>\n" + 
 		"                        </div>\n" + 
 		"                      </div>\n" + 
 		"                    </div>\n" + 
 		"                    <div class=\"col-lg-6\">\n" + 
-		"                      <button type=\"button\" class=\"btn btn-danger pull-right\">Delete</button>\n" + 
+		"                      <button type=\"button\" class=\"btn btn-danger pull-right\" onclick=\"App.deletePoint(" + pointId + ")\">Delete</button>\n" + 
 		"                    </div>\n" + 
 		"                  </div>\n" + 
 		"                </div>";

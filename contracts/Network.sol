@@ -174,6 +174,18 @@ contract Network {
             delete users[verifier].pendingVerifications[length-1];
             users[verifier].pendingVerifications.length--;
         }
+        uint length = users[msg.sender].pointsIdList.length;
+        bool found = false;
+        for(uint i=0; i< length; i++){
+            if (users[msg.sender].pointsIdList[i] == pointId){
+                found = true;
+            }
+            if (found && i < length-1){
+                users[msg.sender].pointsIdList[i] = users[msg.sender].pointsIdList[i+1];
+            }
+        }
+        delete users[msg.sender].pointsIdList[length-1];
+        users[msg.sender].pointsIdList.length--;
         delete users[msg.sender].points[pointId];
         emit deletePointEvent();
     }
@@ -183,15 +195,19 @@ contract Network {
         address verifierAddress = idAddress[verifierId];
         require(users[verifierAddress].exist);
         require(users[msg.sender].points[pointId].exist);
-        bool found = false;
         address[] memory pendingVerifiers = users[msg.sender].points[pointId].pendingVerifiers;
         for(uint i=0; i< pendingVerifiers.length; i++){
             if(pendingVerifiers[i] == verifierAddress){
-                found = true;
+                return;
             }
         }
-        if (found == false)
-            users[msg.sender].points[pointId].pendingVerifiers.push(verifierAddress);
+        address[] memory approvedVerifiers = users[msg.sender].points[pointId].approvedVerifiers;
+        for(uint i=0; i< approvedVerifiers.length; i++){
+            if(approvedVerifiers[i] == verifierAddress){
+                return;
+            }
+        }
+        users[msg.sender].points[pointId].pendingVerifiers.push(verifierAddress);
         PointVerification memory v;
         v.owner = msg.sender;
         v.pointId = pointId;
