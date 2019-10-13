@@ -127,9 +127,9 @@ App = {
 
 	render: async function() {
 		var loader = $("#loader");
-		var content = $("#content");
-		loader.show();
+		var content = $("#mainContent");
 		content.hide();
+		loader.show();
 		var pointsDiv = $("#pointSections");
 		pointsDiv.empty();
 		address = await App.contracts.Network.deployed().then(function(instance) {
@@ -182,8 +182,8 @@ App = {
 				}
 			}
 		});
-		// loader.hide();
-		// content.show();
+		loader.hide();
+		content.show();
 	}
 };
 $(function() {
