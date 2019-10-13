@@ -130,6 +130,17 @@ App = {
 		var pointsDiv = $("#pointSections");
 		pointsDiv.empty();
 		// Load account data
+
+		var result = await App.contracts.Network.deployed().then(function(instance) {
+			networkInstance = instance;
+			return networkInstance.users(App.account);
+		});
+		$("#id").text("@" + result[0]);
+		$("#name").text(result[1]);
+		$("#email").text(result[2]);
+		$("#image").attr("src", result[3]);
+		$("#bio").text(result[4]);
+
 		await App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
 			return networkInstance.getPointsLength({ from: App.account});

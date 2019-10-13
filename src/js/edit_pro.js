@@ -127,6 +127,16 @@ App = {
 		var content = $("#content");
 		loader.show();
 		content.hide();
+
+		var result = await App.contracts.Network.deployed().then(function(instance) {
+			networkInstance = instance;
+			return networkInstance.users(App.account);
+		});
+		$("#name").val(result[1]);
+		$("#email").val(result[2]);
+		$("#image").val(result[3]);
+		$("#bio").text(result[4]);
+
 		var pointsDiv = $("#pointSections");
 		pointsDiv.empty();
 		// Load account data
