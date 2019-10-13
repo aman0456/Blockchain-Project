@@ -219,14 +219,14 @@ App = {
 	},
 
 	editProfile: function() {
-		var paraId = "#pointPara" + pointId;
-		var name = $("name").val();
-		var email = $("email").val();
-		var pic = $("pic-url").val();
-		var bio = $("bio").val();
+		var name = $("#name").val();
+		var email = $("#email").val();
+		var pic = $("#pic-url").val();
+		var bio = $("#bio").val();
+		// console.log("hi", name);
 		App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
-			return networkInstance.respondPoint(name, email, pic, bio, { from: App.account});
+			return networkInstance.editUser(name, email, pic, bio, { from: App.account});
 		}).then(function(result) {
 			// $("#content").hide();
 			// $("#loader").show();

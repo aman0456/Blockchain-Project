@@ -122,14 +122,24 @@ App = {
 		});
 	},
 
-	render: function() {
+	render: async function() {
 		console.log("rendering")
 		var networkInstance;
 		var loader = $("#loader");
 		var content = $("#content");
 		// loader.hide();
 		// content.show();
-
+		var result = await App.contracts.Network.deployed().then(function(instance) {
+			networkInstance = instance;
+			return networkInstance.users(App.account);
+		});
+		console.log(result);
+		$("#id").val(result[0]);
+		$("#name").val(result[1]);
+		$("#email").val(result[2]);
+		$("#image").val(result[3]);
+		$("#bio").val(result[4]);
+		console.log("Added a point to " + App.account)
 		// Load account data
 		console.log(web3.eth.accounts[0]);
 		console.log(web3.eth.accounts[1]);
@@ -231,6 +241,12 @@ App = {
 		}).catch(function(err) {
 			console.error(err);
 		});
+	},
+	displayInfo: async function(){
+		
+		// $("#content").hide();
+		// $("#loader").show();
+		// window.location.reload();
 	}
 };
 
