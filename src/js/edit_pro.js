@@ -196,10 +196,10 @@ App = {
 		var vVal = $(vId).val();
 		await App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
-			networkInstance.addVerifier(pointId, vVal, { from: App.account});
+			return networkInstance.addVerifier(pointId, vVal, { from: App.account});
 		})
 		console.log("Added a verifier to " + pointId);
-		window.location.reload();
+		App.render();
 		// $("#content").hide();
 		// $("#loader").show();
 		// window.location.reload();

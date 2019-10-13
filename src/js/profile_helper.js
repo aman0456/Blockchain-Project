@@ -38,15 +38,8 @@ function getPointEntryString(point) {
 		"                      <div class=\"collapse\" id=\"collapseverifylist-" + pointId + "\">\n" + 
 		"                        <div class=\"card card-body\">\n" +
 		"							<ul class=\"list-group\" id=\"verifiers-" + pointId + "\"></ul>" +
-		"                          <form class=\"form-inline\">\n" + 
-		"                            <input class=\"form-control\" id=\"verifierToAdd-" + pointId + "\">\n" + 
-		"                            <button type=\"button\" class=\"btn btn-primary\" onclick=\"App.addVerifier(" + pointId + ")\">Add</button>\n" + 
-		"                          </form>\n" + 
 		"                        </div>\n" + 
 		"                      </div>\n" + 
-		"                    </div>\n" + 
-		"                    <div class=\"col-lg-6\">\n" + 
-		"                      <button type=\"button\" class=\"btn btn-danger pull-right\" onclick=\"App.deletePoint(" + pointId + ")\">Delete</button>\n" + 
 		"                    </div>\n" + 
 		"                  </div>\n" + 
 		"                </div>";
