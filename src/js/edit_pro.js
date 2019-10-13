@@ -209,8 +209,8 @@ App = {
 		console.log("deleting the point" + pointId);
 		await App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
-			networkInstance.deletePoint(pointId, { from: App.account});
-		})
+			return networkInstance.deletePoint(pointId, { from: App.account});
+		});
 		console.log("Deleted the point " + pointId)
 		window.location.reload();
 		// $("#content").hide();
