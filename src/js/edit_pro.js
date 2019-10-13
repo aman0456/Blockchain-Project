@@ -136,17 +136,19 @@ App = {
 		}).then(function(userPointsCount) {
 			console.log("displaying points");
 			for (var i = 0; i < userPointsCount; i++) {
+				console.log("adding point " + i);
 				networkInstance.getPointByIndex(i, { from: App.account}).then(function(point) {
 					pointId = point[0];
 					var pointSection = point[2];
-					var sectionToAdd = $('section:' + pointSection);
-					if (!sectionToAdd) {
+					var sectionToAdd = $("#section-" + pointSection);
+					if (!sectionToAdd.length) {
+						console.log("adding section" + pointSection);
 						pointsDiv.append(addSectionString(pointSection));
-						sectionToAdd = $('sectionBody:' + pointSection);
-						var assert = require('assert');
-						assert(sectionToAdd, "Section not added properly");
 					}
+					sectionToAdd = $('#sectionBody-' + pointSection);
+					console.log(sectionToAdd.length)
 					sectionToAdd.append(getPointEntryString(point));
+					console.log(sectionToAdd.length)
 					return networkInstance.getApprovedVerifiersLength(pointId, {from: App.account});
 				}).then(function(approvedVerifiersLength) {
 					console.log(approvedVerifiersLength);

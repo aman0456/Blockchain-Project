@@ -1,8 +1,8 @@
 function addSectionString(sectionName) {
-	return "<div class=\"panel panel-info\" id=\"section:" + sectionName + "\">\n" + 
+	return "<div class=\"panel panel-info\" id=\"section-" + sectionName + "\">\n" + 
 				"              <div class=\"panel-heading text-center\"><h2><strong>" + sectionName + "</strong></h2></div>"
-				+ "</div>"
-				+ "<div class=\"panel-body\" id=\"sectionBody:" + sectionName + "\">";
+				+ ""
+				+ "<div class=\"panel-body\" id=\"sectionBody-" + sectionName + "\"></div></div>";
 }
 
 function updatePoints() {
@@ -16,7 +16,7 @@ function getPointEntryString(point) {
 	var pointHeading = point[1];
 	var pointText = point[3];
 	var pointDate = point[4];
-	var final = "<div id=\"acadpt1\">\n" + 
+	var final = "<div id=\"pointDiv" + pointId + "\">\n" + 
 		"                  <div class=\"row\">\n" + 
 		"                    <div class=\"col-lg-6\">\n" + 
 		"                      <h3 id=\"acad1\"><strong>" + pointHeading + "</strong></h3>\n" + 
@@ -47,4 +47,5 @@ function getPointEntryString(point) {
 		"                    </div>\n" + 
 		"                  </div>\n" + 
 		"                </div>";
+	return final;
 }
