@@ -52,22 +52,22 @@ App = {
 					 return networkInstance.existUser({ from: App.account});
 					 // return networkInstance.addUser("temp1", "temp1", { from: App.account});   //TODO: Make this function
 				}).then(function(doesExist) {
-          console.log(doesExist)
-          if (!doesExist) {
-            window.location.href = "login.html";
-          }
-          else {
-            var ad = networkInstance.idAddress("temp2");
-            return ad;
-          }
-        }).then(function(didExist) {
-          return networkInstance.existUser({from: didExist});
-        }).then(function(didExist) {
-          console.log(didExist);
-          App.render();
-        }).catch(function(error) {
-          console.error(error);
-        });
+		  console.log(doesExist)
+		  if (!doesExist) {
+			window.location.href = "login.html";
+		  }
+		  else {
+			var ad = networkInstance.idAddress("temp2");
+			return ad;
+		  }
+		}).then(function(didExist) {
+		  return networkInstance.existUser({from: didExist});
+		}).then(function(didExist) {
+		  console.log(didExist);
+		  App.render();
+		}).catch(function(error) {
+		  console.error(error);
+		});
 				// $('#pointssTable').append("<tr> <td> Achieved this </td> <td> not verified </td> </tr>");
 			});
 		});
@@ -164,16 +164,19 @@ App = {
 				 networkInstance = instance;
 				 return networkInstance.getPendingVerificationsLength();   //TODO: Make this function
 		}).then(function(verifyPointsCount) {
-			var verityPoints = $("#verifyPointsTable");
-			verityPoints.empty();
-      console.log("verifying");
-      for (var i = 0; i < verifyPointsCount; i++) {
-        console.log("hello verify");
-      }
+			var verifyPoints = $("#verifyPointsContent");
+			verifyPoints.empty();
+			console.log("verifying");
+			for (var i = 0; i < verifyPointsCount; i++) {
+				console.log("hello verify");
+			}
 			for (var i = 0; i < verifyPointsCount; i++) {
 				networkInstance.getPendingVerificationByIndex(i, { from: App.account}).then(function(point) {
-					var pointEntry = "<tr> <td>" + point + "</td> <td> <button class=\"btn btn-primary\" onclick=\"verify(" + i + "," + 1 + ")\">Verify</button></td> <button type=\"submit\" class=\"btn btn-primary\" onclick=\"verify(" + i + "," + 0 + ")\">Reject</button></td> </tr>"
-					verityPoints.append(point);
+					var owner = point[0]
+					var pointId = point[1]
+					var pointText = point[2]
+					var pointEntry = "<p>" + owner + ": " + pointText + "\t <button class=\"btn btn-primary\" onclick=\"verify(" + i + "," + 1 + ")\">Verify</button> <button type=\"submit\" class=\"btn btn-primary\" onclick=\"verify(" + i + "," + 0 + ")\">Reject</button></p>"
+					verifyPoints.append(pointEntry);
 				})   //TODO: Make this function
 			}
 		}).catch(function(error) {
