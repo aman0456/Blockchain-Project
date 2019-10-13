@@ -198,7 +198,21 @@ App = {
 			networkInstance = instance;
 			networkInstance.addVerifier(pointId, vVal, { from: App.account});
 		})
-		console.log("Added a verifier to " + pointId)
+		console.log("Added a verifier to " + pointId);
+		window.location.reload();
+		// $("#content").hide();
+		// $("#loader").show();
+		// window.location.reload();
+	},
+
+	deletePoint: async function(pointId) {
+		console.log("deleting the point" + pointId);
+		await App.contracts.Network.deployed().then(function(instance) {
+			networkInstance = instance;
+			networkInstance.deletePoint(pointId, { from: App.account});
+		})
+		console.log("Deleted the point " + pointId)
+		window.location.reload();
 		// $("#content").hide();
 		// $("#loader").show();
 		// window.location.reload();
@@ -206,17 +220,16 @@ App = {
 
 	editProfile: function() {
 		var paraId = "#pointPara" + pointId;
-		var name = $("name");
-		var email = $("email");
-		var pic = $("pic-url");
-		var bio = $("bio");
+		var name = $("name").val();
+		var email = $("email").val();
+		var pic = $("pic-url").val();
+		var bio = $("bio").val();
 		App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
 			return networkInstance.respondPoint(name, email, pic, bio, { from: App.account});
 		}).then(function(result) {
-			$("#content").hide();
-			$("#loader").show();
-			console.log(result);
+			// $("#content").hide();
+			// $("#loader").show();
 			window.location.reload();
 		}).catch(function(err) {
 			console.error(err);

@@ -10,7 +10,7 @@ function getVerifier(username, status) {
 	if (status) {
 		statusSymbol = "glyphicon-ok"
 	}
-	return "<li class=\"list-group-item\" style=\"border: none;\">point 1   <span class=\"glyphicon " + statusSymbol + "\"></span><br/></li>";
+	return "<li class=\"list-group-item\" style=\"border: none;\">" + username + "   <span class=\"glyphicon " + statusSymbol + "\"></span><br/></li>";
 }
 
 function getPointEntryString(point) {
@@ -46,7 +46,7 @@ function getPointEntryString(point) {
 		"                      </div>\n" + 
 		"                    </div>\n" + 
 		"                    <div class=\"col-lg-6\">\n" + 
-		"                      <button type=\"button\" class=\"btn btn-danger pull-right\">Delete</button>\n" + 
+		"                      <button type=\"button\" class=\"btn btn-danger pull-right\" onclick=\"App.deletePoint(" + pointId + ")\">Delete</button>\n" + 
 		"                    </div>\n" + 
 		"                  </div>\n" + 
 		"                </div>";
