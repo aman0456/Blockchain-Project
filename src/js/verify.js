@@ -130,17 +130,11 @@ App = {
 
 		App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
-			return networkInstance.getPendingVerificationsLength({ from: App.account});   //TODO: Make this function
+			return networkInstance.getPendingVerificationsLength({ from: App.account});
 		}).then(async function(userPointsCount) {
-			console.log("getting")
 			var verifications = $("#verifications");
 			console.log("emptying");
 			$("#verifications").empty();
-			console.log("displaying verifications");
-			console.log(userPointsCount)
-			// for (var i = 0; i < userPointsCount; i++) {
-				// console.log("hello");
-			// } 
 			for (var i = 0; i < userPointsCount; i++) {
 				await networkInstance.getPendingVerificationByIndex(i, { from: App.account}).then(function(point) {
 				var id = point[0];
@@ -152,7 +146,7 @@ App = {
 				var date = point[6];
 				var entry = verificationHTML(id, name, pointId, heading, section, text, date, i);
 				verifications.append(entry);
-		});   //TODO: Make this function
+		});
 			}
 		}).catch(function(error) {
 			console.error(error);
