@@ -59,7 +59,7 @@ contract Network {
         addressId[msg.sender] = id;
         users[msg.sender].name = name;
         users[msg.sender].email = email;
-        users[msg.sender].image = image;
+        users[msg.sender].image = "images/user.png";
         users[msg.sender].bio = "";
         users[msg.sender].pointId = 0;
         users[msg.sender].exist = true;
