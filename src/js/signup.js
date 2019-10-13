@@ -5,10 +5,6 @@ App = {
 	hasVoted: false,
 
 	init: function() {
-		return App.initWeb3();
-	},
-
-	initWeb3: function() {
 		// TODO: refactor conditional
 		if (typeof web3 !== 'undefined') {
 			// If a web3 instance is already provided by Meta Mask.
@@ -19,10 +15,6 @@ App = {
 			App.web3Provider = new Web3.providers.HttpProvider('http://10.42.0.139:7545');
 			web3 = new Web3(App.web3Provider);
 		}
-		return App.initContract();
-	},
-
-	initContract: function() {
 		$.getJSON("Network.json", function(network) {
 			// Instantiate a new truffle contract from the artifact
 			App.contracts.Network = TruffleContract(network);

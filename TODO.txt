@@ -1,4 +1,4 @@
 EXTARS:
 integrate with keybase
 is login required
-link the users in verifiers
+security issues
