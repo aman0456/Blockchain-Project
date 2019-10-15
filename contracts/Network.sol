@@ -28,6 +28,7 @@ contract Network {
         uint[] pointsIdList;
         mapping(uint => Point) points;
         PointVerification[] pendingVerifications;
+        address[] connections;
     }
 
     mapping(string => address) public idAddress;
@@ -245,5 +246,57 @@ contract Network {
         delete users[msg.sender].pendingVerifications[length-1];
         users[msg.sender].pendingVerifications.length--;      
         emit respondPointEvent();
+    }
+
+    function isConnection(address addr) public view
+    returns (bool){
+        require(users[msg.sender].exist);
+        require(users[addr].exist);
+        uint length = users[msg.sender].connections.length;
+        for (uint i = 0; i<length-1; i++){
+            if(addr == users[msg.sender].connections[i]){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function addConnection(address addr) public {
+        require(users[msg.sender].exist);
+        require(users[addr].exist);
+        require(!isConnection(addressId[addr]));
+        users[msg.sender].connections.push(addr);
+    }
+
+    function removeConnection(address addr) public {
+        require(users[msg.sender].exist);
+        require(users[addr].exist);
+        require(isConnection(addressId[addr]));
+        uint length = users[msg.sender].connections.length;
+        bool found = false;
+        for(uint i=0; i< length; i++){
+            if (users[msg.sender].connections[i] == addr){
+                found = true;
+            }
+            if (found && i < length-1){
+                users[msg.sender].connections[i] = users[msg.sender].connections[i+1];
+            }
+        }
+        delete users[msg.sender].connections[length-1];
+        users[msg.sender].connections.length--;
+    }
+
+    function getConnectionsLength() public view
+    returns (uint){
+        require(users[msg.sender].exist);
+        return users[msg.sender].connections.length;
+    }
+
+    function getConnectionsByIndex(uint idx) public view
+    returns (string memory, string memory, string memory, string memory){
+        require(users[msg.sender].exist);
+        require(idx < users[msg.sender].connections.length);
+        User memory u = users[users[msg.sender].connections[idx]];
+        return (u.id, u.name, u.email, u.image);
     }
 }
