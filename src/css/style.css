@@ -42,6 +42,10 @@ h1, h2, h3, h4, h5, h6, figure {
 	border-radius: 10px;
 }
 
+.select:hover{
+	cursor:pointer;
+} 
+
 .hovhighlight:hover{
   background-color: #F5F5F5;
 }
