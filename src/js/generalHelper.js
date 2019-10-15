@@ -33,7 +33,7 @@ function init() {
 		}).then(function(doesExist) {
 			console.log(doesExist)
 			if (!doesExist) {
-				window.location.href = "login.html";
+				window.location.href = "signup.html";
 			}
 			App.render();
 		});
