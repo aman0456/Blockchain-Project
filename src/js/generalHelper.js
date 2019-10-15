@@ -27,10 +27,10 @@ function init() {
 		});
 		// window.ethereum.autoRefreshOnNetworkChange = false;
 		// web3.personal.unlockAccount(web3.eth.defaultAccount, "", 0)
-		var doesExist = App.contracts.Network.deployed().then(function(instance) {
+		App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
 			return networkInstance.existUser({ from: App.account})
-		}).then(function(instance) {
+		}).then(function(doesExist) {
 			console.log(doesExist)
 			if (!doesExist) {
 				window.location.href = "login.html";
