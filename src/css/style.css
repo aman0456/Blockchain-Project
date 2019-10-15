@@ -47,9 +47,11 @@ h1, h2, h3, h4, h5, h6, figure {
 }
 
 .floatcard {
-    margin-top: 10px;
+    margin-top: 20px;
+    margin-right: 0px;
+    margin-left: 30px;
     box-shadow: 0 0 10px #D3D3D3;
-    padding:0 15px 0 15px;
+    padding:10px 15px 10px 15px;
 }
 
 
