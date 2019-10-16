@@ -24,12 +24,12 @@ App = {
 			var connAddress = await networkInstance.getConnectionsByIndex(i, { from: App.account});
 			var connUser = await networkInstance.users(connAddress);
 			var entry = verificationHTML(connUser[0], connUser[1], connUser[3]);
-			if (i == 1) entry = verificationHTML2(connUser[0], connUser[1], connUser[2]);
+			if (i == 1) entry = verificationHTML2(connUser[0], connUser[1], connUser[3]);
 			connections.append(entry);
 		}
 		console.log("Added all the connection");
 		loader.hide();
-		$("#mainContent").show();
+		content.show();
 		console.log("done");
 	},
 };
