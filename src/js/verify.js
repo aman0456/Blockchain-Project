@@ -62,7 +62,7 @@ function verificationHTML(id, name, pointId, heading, section, text, date, index
 	'        <div class="container">'+
 	'          <div class="row">'+
 	'            <div class="col-lg-6">'+
-	'            <h3 id="vn1"><strong> <a href="user.html?user="' + name + '"> ' + name + '</a></strong></h3>'+
+	'            <h3 id="vn1"><strong> <a href="user.html?user="' + id + '"> ' + name + '</a></strong></h3>'+
 	'            </div>'+
 	'          </div>'+
 	'          <div class="row">'+
