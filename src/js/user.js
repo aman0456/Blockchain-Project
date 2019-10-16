@@ -50,12 +50,17 @@ App = {
 			}
 		}
 		if(found){
-			$("#connect").attr("class", "glyphicon glyphicon-ok");
-			$("#connect").attr("onclick", "App.connect()");
+			$("#connect").attr({
+				"class": "glyphicon glyphicon-ok", 
+				"onclick": "", 
+				"title": ""
+			});
 		}
 		else{
-			$("#connect").attr("class", "glyphicon glyphicon-plus select");
-			$("#connect").attr("onclick", "App.connect()");
+			$("#connect").attr({
+				"class": "glyphicon glyphicon-plus select",
+				"onclick": "App.connect()"
+			});
 		}
 		await App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
