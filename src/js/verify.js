@@ -34,19 +34,24 @@ App = {
 		content.show();
 	},
 
-	respondPoint: function(index, response) {
-		App.contracts.Network.deployed().then(function(instance) {
+	respondPoint: async function(index, response) {
+		var hash = await web3.personal.sign(web3.fromUtf8("dinosaur"), web3.eth.coinbase, function(error, hash) {
+			if (error == null) {
+				return hash;
+			}
+			else {
+				console.log(error);
+				return null;
+			}
+		});
+		await App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
 			return networkInstance.respondPoint(index, response, { from: App.account});
-		}).then(function(result) {
-			console.log("Added a point to " + App.account)
-			$("#content").hide();
-			$("#loader").show();
-			console.log(result);
-			App.render();
-		}).catch(function(err) {
-			console.error(err);
 		});
+		console.log("Added a point to " + App.account)
+		$("#content").hide();
+		$("#loader").show();
+		App.render();
 	}
 };
 

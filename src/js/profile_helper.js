@@ -24,11 +24,11 @@ function getPointEntryString(point) {
 		"                      <h3 id=\"acad1\"><strong>" + pointHeading + "</strong></h3>\n" + 
 		"                    </div>\n" + 
 		"                    <div class=\"col-lg-6\">\n" + 
-		"                      <h3 class=\"text-right\">Jan 2019</h3>\n" + 
+		"                      <h3 class=\"text-right\">" + pointDate + "</h3>\n" + 
 		"                    </div>\n" + 
 		"                  </div>\n" + 
 		"                  <p>\n" + 
-		"                    " + pointDate + "<br/>" + pointText + "<br/>\n" + 
+		"                    " + pointText + "<br/>\n" + 
 		"                  </p>\n" + 
 		"                  <div class=\"row\">\n" + 
 		"                    <div class=\"col-lg-6\">\n" + 
