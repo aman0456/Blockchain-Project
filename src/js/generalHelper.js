@@ -6,7 +6,7 @@ function init() {
 		web3 = new Web3(web3.currentProvider);
 	} else {
 		// Specify default instance if no web3 instance provided
-		App.web3Provider = new Web3.providers.HttpProvider('http://10.42.0.139:7545');
+		App.web3Provider = new Web3.providers.HttpProvider('http://10.159.4.217:7545');
 		web3 = new Web3(App.web3Provider);
 	}
 	console.log("here");
@@ -33,7 +33,7 @@ function init() {
 		}).then(function(doesExist) {
 			console.log(doesExist)
 			if (!doesExist) {
-				window.location.href = "login.html";
+				window.location.href = "signup.html";
 			}
 			App.render();
 		});
