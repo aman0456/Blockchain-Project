@@ -35,15 +35,15 @@ App = {
 	},
 
 	respondPoint: async function(index, response) {
-		var hash = await web3.personal.sign(web3.fromUtf8("dinosaur"), web3.eth.coinbase, function(error, hash) {
-			if (error == null) {
-				return hash;
-			}
-			else {
-				console.log(error);
-				return null;
-			}
-		});
+		// var hash = await web3.personal.sign(web3.fromUtf8("dinosaur"), web3.eth.coinbase, function(error, hash) {
+		// 	if (error == null) {
+		// 		return hash;
+		// 	}
+		// 	else {
+		// 		console.log(error);
+		// 		return null;
+		// 	}
+		// });
 		await App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
 			return networkInstance.respondPoint(index, response, { from: App.account});
