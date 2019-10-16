@@ -72,12 +72,12 @@ App = {
 				var point = await networkInstance.getPointByIndex(i, { from: address});
 				var pointId = point[0];
 				var pointSection = point[2];
-				var sectionToAdd = $("#section-" + pointSection);
+				var sectionToAdd = $('[id=\"section-' + pointSection + '\"]');
 				if (!sectionToAdd.length) {
 					console.log("adding section" + pointSection);
 					pointsDiv.append(addSectionString(pointSection));
 				}
-				sectionToAdd = $('#sectionBody-' + pointSection);
+				sectionToAdd = $('[id=\"sectionBody-' + pointSection + '\"]');
 				sectionToAdd.append(getPointEntryString(point));
 				var verifierElem = $('#verifiers-' + pointId);
 				verifierElem.empty();
