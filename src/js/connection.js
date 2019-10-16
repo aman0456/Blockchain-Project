@@ -34,15 +34,19 @@ App = {
 	},
 };
 
+function goto(id) {
+	window.location.href = "user.html?user=" + id;
+}
+
 function verificationHTML(id, name, imageId){
 
 	var myvar = 
-	"<div class=\"col-lg-5 floatcard select\">\n" + 
+	"<div class=\"col-lg-5 floatcard select\" onclick=\"goto(\'" + id + "\')\">\n" + 
 				"              <img src=\"\" class=\"img-responsive center-block\" id=\"image\" onerror=\"this.src='" + imageId + "';\" style=\"width:150px;height:150px;border-radius: 50%\">\n" + 
 				"                <!-- <img src=\"\" id=\"image\" class=\"img-responsive center-block\" alt=\"profile pic\" style=\"width:150px;height:150px\"> -->\n" + 
 				"                <p>\n" + 
 				"                  <h3 class=\"text-center\" id=\"name\">" + name + "</h3>\n" + 
-				"                  <h3 class=\"text-center\" id=\"id\">" + id + "</h3>\n" + 
+				"                  <h5 class=\"text-center\" id=\"id\" style=\"color:#a9a9a9;\">@" + id + "</h3>\n" + 
 				"                </p>\n" + 
 				"            </div>\n" + 
 				"            <div class=\"col-lg-1\"></div>";
@@ -51,12 +55,12 @@ function verificationHTML(id, name, imageId){
 
 function verificationHTML2(id, name, imageId){
 	var myvar = 
-	"<div class=\"col-lg-5 floatcard select\">\n" + 
+	"<div class=\"col-lg-5 floatcard select\"onclick=\"goto(\'" + id + "\')\">\n" +
 				"              <img src=\"\" class=\"img-responsive center-block\" id=\"image\" onerror=\"this.src='" + imageId + "';\" style=\"width:150px;height:150px;border-radius: 50%\">\n" + 
 				"                <!-- <img src=\"\" id=\"image\" class=\"img-responsive center-block\" alt=\"profile pic\" style=\"width:150px;height:150px\"> -->\n" + 
 				"                <p>\n" + 
 				"                  <h3 class=\"text-center\" id=\"name\">" + name + "</h3>\n" + 
-				"                  <h3 class=\"text-center\" id=\"id\">" + id + "</h3>\n" + 
+				"                  <h5 class=\"text-center\" id=\"id\" style=\"color:#a9a9a9;\">@" + id + "</h3>\n" + 
 				"                </p>\n" + 
 				"            </div>\n";
 	return myvar;
