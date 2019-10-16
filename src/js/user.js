@@ -38,7 +38,25 @@ App = {
 		$("#email").text(result[2]);
 		$("#image").attr("src", result[3]);
 		$("#bio").text(result[4]);
-
+		var userConnectionCount = await App.contracts.Network.deployed().then(function(instance) {
+			networkInstance = instance;
+			return networkInstance.getConnectionsLength({ from: App.account});
+		})
+		var found = false;
+		for (var i = 0; i < userConnectionCount; i++) {
+			var connAddress = await networkInstance.getConnectionsByIndex(i, { from: App.account});
+			if(connAddress==address){
+				found = true;
+			}
+		}
+		if(found){
+			$("#connect").attr("class", "glyphicon glyphicon-ok");
+			$("#connect").attr("onclick", "App.connect()");
+		}
+		else{
+			$("#connect").attr("class", "glyphicon glyphicon-plus select");
+			$("#connect").attr("onclick", "App.connect()");
+		}
 		await App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
 			return networkInstance.getPointsLength({ from: address});
@@ -74,6 +92,14 @@ App = {
 		});
 		loader.hide();
 		content.show();
+	},
+	connect: async function(){
+		console.log("connect", address )
+		await App.contracts.Network.deployed().then(function(instance) {
+			networkInstance = instance;
+			return networkInstance.addConnection(address, { from: App.account});
+		});
+		App.render();
 	}
 };
 $(function() {
