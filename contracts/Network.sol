@@ -52,7 +52,7 @@ contract Network {
         return users[msg.sender].exist;
     }
 
-    function addUser(string memory id, string memory name, string memory email, string memory image) public {
+    function addUser(string memory id, string memory name, string memory email) public {
         require(!users[msg.sender].exist);
         require(!users[idAddress[id]].exist);
         users[msg.sender].id = id;
@@ -248,43 +248,43 @@ contract Network {
         emit respondPointEvent();
     }
 
-    function isConnection(address addr) public view
-    returns (bool){
-        require(users[msg.sender].exist);
-        require(users[addr].exist);
-        uint length = users[msg.sender].connections.length;
-        for (uint i = 0; i<length-1; i++){
-            if(addr == users[msg.sender].connections[i]){
-                return true;
-            }
-        }
-        return false;
-    }
+    // function isConnection(address addr) public view
+    // returns (bool){
+    //     require(users[msg.sender].exist);
+    //     require(users[addr].exist);
+    //     uint length = users[msg.sender].connections.length;
+    //     for (uint i = 0; i<length-1; i++){
+    //         if(addr == users[msg.sender].connections[i]){
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
 
     function addConnection(address addr) public {
         require(users[msg.sender].exist);
         require(users[addr].exist);
-        require(!isConnection(addressId[addr]));
+        // require(!isConnection(addressId[addr]));
         users[msg.sender].connections.push(addr);
     }
 
-    function removeConnection(address addr) public {
-        require(users[msg.sender].exist);
-        require(users[addr].exist);
-        require(isConnection(addressId[addr]));
-        uint length = users[msg.sender].connections.length;
-        bool found = false;
-        for(uint i=0; i< length; i++){
-            if (users[msg.sender].connections[i] == addr){
-                found = true;
-            }
-            if (found && i < length-1){
-                users[msg.sender].connections[i] = users[msg.sender].connections[i+1];
-            }
-        }
-        delete users[msg.sender].connections[length-1];
-        users[msg.sender].connections.length--;
-    }
+    // function removeConnection(address addr) public {
+    //     require(users[msg.sender].exist);
+    //     require(users[addr].exist);
+    //     // require(isConnection(addressId[addr]));
+    //     uint length = users[msg.sender].connections.length;
+    //     bool found = false;
+    //     for(uint i=0; i< length; i++){
+    //         if (users[msg.sender].connections[i] == addr){
+    //             found = true;
+    //         }
+    //         if (found && i < length-1){
+    //             users[msg.sender].connections[i] = users[msg.sender].connections[i+1];
+    //         }
+    //     }
+    //     delete users[msg.sender].connections[length-1];
+    //     users[msg.sender].connections.length--;
+    // }
 
     function getConnectionsLength() public view
     returns (uint){
@@ -293,10 +293,10 @@ contract Network {
     }
 
     function getConnectionsByIndex(uint idx) public view
-    returns (string memory, string memory, string memory, string memory){
+    returns (address){
         require(users[msg.sender].exist);
         require(idx < users[msg.sender].connections.length);
-        User memory u = users[users[msg.sender].connections[idx]];
-        return (u.id, u.name, u.email, u.image);
+        // User memory u = users[users[msg.sender].connections[idx]];
+        return users[msg.sender].connections[idx];
     }
 }
