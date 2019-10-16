@@ -14,19 +14,23 @@ App = {
 		var userConnectionCount = await App.contracts.Network.deployed().then(function(instance) {
 			networkInstance = instance;
 			return networkInstance.getConnectionsLength({ from: App.account});
-		})
+		});
+
 		var connections = $("#connectionsRow");
 		console.log("emptying");
 		$("#connectionsRow").empty();
 		for (var i = 0; i < userConnectionCount; i++) {
+			console.log("hereeee");
 			var connAddress = await networkInstance.getConnectionsByIndex(i, { from: App.account});
-			var connUser = await networkInstance.users(address);
-			var entry = verificationHTML(result[0], result[1], result[3]);
-			if (i == 1) entry = verificationHTML2(result[0], result[1], result[2]);
+			var connUser = await networkInstance.users(connAddress);
+			var entry = verificationHTML(connUser[0], connUser[1], connUser[3]);
+			if (i == 1) entry = verificationHTML2(connUser[0], connUser[1], connUser[3]);
 			connections.append(entry);
 		}
+		console.log("Added all the connection");
 		loader.hide();
 		content.show();
+		console.log("done");
 	},
 };
 
@@ -42,7 +46,7 @@ function verificationHTML(id, name, imageId){
 				"                </p>\n" + 
 				"            </div>\n" + 
 				"            <div class=\"col-lg-1\"></div>";
-	return myvar
+	return myvar;
 }
 
 function verificationHTML2(id, name, imageId){
@@ -55,7 +59,7 @@ function verificationHTML2(id, name, imageId){
 				"                  <h3 class=\"text-center\" id=\"id\">" + id + "</h3>\n" + 
 				"                </p>\n" + 
 				"            </div>\n";
-	return myvar
+	return myvar;
 }
 
 $(function() {
