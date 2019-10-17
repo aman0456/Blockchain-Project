@@ -17,7 +17,7 @@ This project was developed as part of the course project for EE465 (Cryptocurren
 * User can use the `Search` bar to see the profile page of other users.
 * On the profile page of other users there is a `plus` symbol with the name which can be clicked to connect the user.
 * All the connections can be seen in the `Connections` page.
-* 
+
 ## Developed By:
 [Aman Bansal](https://github.com/aman0456)
 [Kunal Goyal](https://github.com/kgoyal98)
